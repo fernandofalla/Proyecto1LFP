@@ -90,8 +90,6 @@ def AFD(entrada):
             if elemento == " ":
                 v.columna += 1
                 v.estado = 0
-            if elemento == "":
-                v.fila += 1
             elif elemento == '\n':
                 v.fila += 1
                 v.columna = 1

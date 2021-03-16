@@ -16,6 +16,10 @@ class Token:
             return "SIMB_IGUAL", self.lexema, self.fila, self.columna
         elif self.token == "id":
             return "IDENTIFICADOR", self.lexema, self.fila, self.columna
+        elif self.token == "nombre":
+            return "NOMBRE", self.lexema, self.fila, self.columna
+        elif self.token == "desc":
+            return "DESCRIPCION", self.lexema, self.fila, self.columna
         elif self.token == "nombre_res":
             return "NOMBRE_RES", self.lexema, self.fila, self.columna
         elif self.token == "nombre_sec":
