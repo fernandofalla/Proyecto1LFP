@@ -14,6 +14,10 @@ class Token:
             return "RESERVADA_RES", self.lexema, self.fila, self.columna
         elif self.token == "igual":
             return "SIMB_IGUAL", self.lexema, self.fila, self.columna
+        elif self.token == "porcen":
+            return "SIMB_PORCENTUAL", self.lexema, self.fila, self.columna
+        elif self.token == "coma":
+            return "SIMB_COMA", self.lexema, self.fila, self.columna
         elif self.token == "id":
             return "IDENTIFICADOR", self.lexema, self.fila, self.columna
         elif self.token == "nombre":
@@ -38,6 +42,14 @@ class Token:
             return "NUMERO_ENTERO", self.lexema, self.fila, self.columna
         elif self.token == "decimal":
             return "NUMERO_DECIMAL", self.lexema, self.fila, self.columna
+        elif self.token == "cliente":
+            return "NOMBRE_CLIENTE", self.lexema, self.fila, self.columna
+        elif self.token == "nit":
+            return "NIT_CLIENTE", self.lexema, self.fila, self.columna
+        elif self.token == "dir":
+            return "DIRECCION_CLIENTE", self.lexema, self.fila, self.columna
+        elif self.token == "prop":
+            return "PORCENTAJE", self.lexema, self.fila, self.columna
         else:
             return "SIMBOLO DESCONOCIDO", self.lexema, self.fila, self.columna
         '''

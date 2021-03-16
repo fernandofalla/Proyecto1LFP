@@ -54,10 +54,14 @@ def Menu():
         Menu()
 
 def mostrar():
-    AFD(v.entrada)
-    print("Lista de Tokens")
+    print("Lista de Tokens en Menu")
     print()
-    Mostrar_Token()
+    Mostrar_Token_Menu()
+    print()
+    print("Lista de Tokens en Factura")
+    print()
+    Mostrar_Token_Factura()
+    print()
     print("Lista de Errores")
     print()
     Mostrar_Error()
@@ -71,20 +75,27 @@ def Cargar_Menu():
         v.entrada += i
 
 def Cargar_Orden():
-    pass
+    archivo = input("Ingrese archivo: ")
+
+    entrada = open(archivo, "r")
+    v.entrada = ""
+    for i in entrada.read():
+        v.entrada += i
 
 def Generar_Menu():
-    pass
+    AFD()
 
 def Generar_Factura():
-    pass
+    v.fila = 1
+    v.columna = 1
+    v.cadena = ""
+    AFD()
 
 def Generar_Arbol():
     pass
 
-def AFD(entrada):
+def AFD():
     v.entrada = v.entrada + "#"
-
     for elemento in v.entrada:
         if v.estado == 0:
             if elemento == " ":
@@ -155,6 +166,10 @@ def AFD(entrada):
                 v.columna += 1
                 v.cadena += elemento
                 v.estado = 2
+            elif elemento == "-":
+                v.columna += 1
+                v.cadena += elemento
+                v.estado = 2
             elif elemento == " ":
                 v.columna += 1
                 v.cadena += elemento
@@ -164,13 +179,47 @@ def AFD(entrada):
                 v.cadena += elemento
                 v.estado = 2
             elif elemento == "'":
-                v.columna += 1
                 v.estado = 3
         elif v.estado == 3:
-            if " " in  v.cadena:
-                Guardar_Token("nombre_res")
-            else:
+            if elemento == ":":
                 Guardar_Token("nombre_sec")
+                v.cadena += elemento
+                v.columna += 1
+                Guardar_Token("dos_puntos")
+            elif elemento == ";":
+                Guardar_Token("nombre")
+                v.cadena += elemento
+                v.columna += 1
+                Guardar_Token("punto_coma")
+            elif elemento == "]":
+                Guardar_Token("desc")
+                v.cadena += elemento
+                v.columna += 1
+                Guardar_Token("corch_ce")
+            elif elemento == ",":
+                condicion_1 = v.cadena.replace("-", "")
+                cond = condicion_1.replace(" ","")
+                if cond.isalpha():
+                    Guardar_Token("cliente")
+                    v.cadena += elemento
+                    v.columna += 1
+                    Guardar_Token("coma")
+                elif cond.isdigit():
+                    Guardar_Token("nit")
+                    v.cadena += elemento
+                    v.columna += 1
+                    Guardar_Token("coma")
+                elif cond.isalnum():
+                    Guardar_Token("dir")
+                    v.cadena += elemento
+                    v.columna += 1
+                    Guardar_Token("coma")
+            elif elemento == " ":
+                v.columna += 1
+                v.estado = 3
+            elif elemento == "\n":
+                Guardar_Token("nombre_res")
+                v.fila += 1
         elif v.estado == 4:
             if elemento.isalpha():
                 v.columna += 1
@@ -209,6 +258,10 @@ def AFD(entrada):
                 v.columna += 1
                 v.cadena += elemento
                 Guardar_Token("punto_coma")
+            elif elemento == "%":
+                v.columna += 1
+                v.cadena += elemento
+                Guardar_Token("prop")
             elif elemento == ".":
                 v.columna += 1
                 v.cadena += elemento
@@ -248,9 +301,18 @@ def Guardar_Error(tipo):
     v.cadena = ""
     v.estado = 0
 
-def Mostrar_Token():
+def Mostrar_Token_Menu():
     for i in v.Lista_Token:
         print(i)
+
+def Mostrar_Token_Factura():
+    for i in v.Lista_Token:
+        if "NOMBRE_CLIENTE" in i:
+            print(i)
+        elif "NIT_CLIENTE" in i:
+            print(i)
+        elif "DIRECCION_CLIENTE" in i:
+            print(i)
 
 def Mostrar_Error():
     for i in v.Lista_Error:
