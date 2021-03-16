@@ -1,4 +1,6 @@
 import os
+import webbrowser
+from tkinter.filedialog import askopenfilename
 from Token import Token
 from Token import Valor
 from Token import Error
@@ -67,29 +69,42 @@ def mostrar():
     Mostrar_Error()
 
 def Cargar_Menu():
-    archivo = input("Ingrese archivo: ")
+    try:
+        
+        archivo = askopenfilename()
 
-    entrada = open(archivo, "r")
+        entrada = open(archivo, "r")
 
-    for i in entrada.read():
-        v.entrada += i
+        for i in entrada.read():
+            v.entrada += i
+            
+    except:
+        print("Archivo incorrecto")
 
 def Cargar_Orden():
-    archivo = input("Ingrese archivo: ")
+    try:
+        
+        archivo = askopenfilename()
 
-    entrada = open(archivo, "r")
-    v.entrada = ""
-    for i in entrada.read():
-        v.entrada += i
+        entrada = open(archivo, "r")
+        v.entrada = ""
+
+        for i in entrada.read():
+            v.entrada += i
+            
+    except:
+        print("Archivo incorrecto")
 
 def Generar_Menu():
     AFD()
+    mostrarListaToken()
 
 def Generar_Factura():
     v.fila = 1
     v.columna = 1
     v.cadena = ""
     AFD()
+    mostrarListaToken()
 
 def Generar_Arbol():
     pass
@@ -317,5 +332,75 @@ def Mostrar_Token_Factura():
 def Mostrar_Error():
     for i in v.Lista_Error:
         print(i)
+    
+def mostrarListaToken():    
+    contador = 1
+
+    filew = open("reporte.html", "w")
+
+    filew.write("<html>")
+    filew.write("<head>")
+    filew.write("<title>BASILISK</title>")
+    filew.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">')
+    filew.write('<link rel="icon" href="comando.png">')
+    filew.write("</head>")
+    filew.write("<body>")        
+    filew.write('<div class="container" style="text-align:center">')
+    filew.write("<br>")
+    filew.write("<br>")
+    filew.write('<div class="jumbotron jumbotron-fluid">')
+    filew.write('<div class="container">')
+    filew.write('<h1 class="display-4">Reporte Tokens</h1>')
+    filew.write('<p class="lead">A continuacion se muestran los tokens reconocidos por el AFD</p>')
+    filew.write("</div>")
+    filew.write("</div>")
+    filew.write('<table class="table">')
+    filew.write('<thead>')
+    filew.write("</tr>")
+    filew.write('<th class="bg-danger">NO.</th>')  
+    filew.write('<th class="bg-light">TOKEN</th>')
+    filew.write('<th class="bg-info">LEXEMA</th>')        
+    filew.write('<th class="bg-warning">FILA</th>')  
+    filew.write('<th class="bg-dark">COLUMNA</th>')  
+    filew.write("</tr>")
+    filew.write("</thead>")
+    filew.write("<tbody>")
+
+    #Recorrer la lista hasta la cantidad de registros a mostrar                               
+    for i in v.Lista_Token:
+
+        filew.write("<tr>")          
+        filew.write("<td>")
+        filew.write(str(contador))
+        filew.write("</td>")
+        filew.write("<td>")
+        filew.write(str(i[0]))
+        filew.write("</td>")
+        filew.write("<td>")
+        filew.write(str(i[1]))
+        filew.write("</td>")   
+        filew.write("<td>")
+        filew.write(str(i[2]))
+        filew.write("</td>")
+        filew.write("<td>")
+        filew.write(str(i[3]))
+        filew.write("</td>")              
+        filew.write("</tr>")    
+
+        contador += 1                    
+                        
+    filew.write("</tbody>")
+    filew.write("</table>")
+    filew.write("<br>")
+    filew.write("<br>")
+    filew.write("</div>")
+    filew.write("</body>")        
+    filew.write("</html>")        
+    
+    #Cierre del archivo
+    filew.close()
+
+    #Abrir archivo en un navegador
+    webbrowser.open_new_tab("reporte.html")  
 
 Menu()
