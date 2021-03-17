@@ -32,7 +32,7 @@ def Menu():
     opcion = input(">> ")
 
     if opcion == "0":
-        mostrar()
+        usoDic()
         Menu()
     elif opcion == "1":
         Cargar_Menu()
@@ -97,14 +97,19 @@ def Cargar_Orden():
 
 def Generar_Menu():
     AFD()
-    mostrarListaToken()
+    Token_Reconocido()
+    if v.Lista_Error != None:
+        Error_Encontrado()
+    Mostrar_Menu()
 
 def Generar_Factura():
     v.fila = 1
     v.columna = 1
     v.cadena = ""
     AFD()
-    mostrarListaToken()
+    Token_Reconocido()
+    if v.Lista_Error != None:
+        Error_Encontrado()
 
 def Generar_Arbol():
     pass
@@ -269,7 +274,7 @@ def AFD():
                 v.columna += 1
                 v.estado = 5
             elif elemento == ";":
-                Guardar_Token("numero")
+                Guardar_Token("precio")
                 v.columna += 1
                 v.cadena += elemento
                 Guardar_Token("punto_coma")
@@ -288,12 +293,12 @@ def AFD():
                 v.estado = 6
             elif elemento == ";":
                 if v.cadena[-1] == ".":
-                    Guardar_Token("numero")
+                    Guardar_Token("precio")
                     v.columna += 1
                     v.cadena += elemento
                     Guardar_Token("punto_coma")
                 else:
-                    Guardar_Token("decimal")
+                    Guardar_Token("precio")
                     v.columna += 1
                     v.cadena += elemento
                     Guardar_Token("punto_coma")
@@ -333,14 +338,14 @@ def Mostrar_Error():
     for i in v.Lista_Error:
         print(i)
     
-def mostrarListaToken():    
+def Token_Reconocido():    
     contador = 1
 
-    filew = open("reporte.html", "w")
+    filew = open("Token.html", "w")
 
     filew.write("<html>")
     filew.write("<head>")
-    filew.write("<title>BASILISK</title>")
+    filew.write("<title>TOKENS</title>")
     filew.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">')
     filew.write('<link rel="icon" href="comando.png">')
     filew.write("</head>")
@@ -348,12 +353,13 @@ def mostrarListaToken():
     filew.write('<div class="container" style="text-align:center">')
     filew.write("<br>")
     filew.write("<br>")
-    filew.write('<div class="jumbotron jumbotron-fluid">')
+    filew.write('<div class="jumbotron text-white bg-dark">')
     filew.write('<div class="container">')
-    filew.write('<h1 class="display-4">Reporte Tokens</h1>')
+    filew.write('<h1>Reporte de Tokens</h1>')
     filew.write('<p class="lead">A continuacion se muestran los tokens reconocidos por el AFD</p>')
     filew.write("</div>")
     filew.write("</div>")
+    filew.write('<div class="table-responsive">')
     filew.write('<table class="table">')
     filew.write('<thead>')
     filew.write("</tr>")
@@ -361,13 +367,84 @@ def mostrarListaToken():
     filew.write('<th class="bg-light">TOKEN</th>')
     filew.write('<th class="bg-info">LEXEMA</th>')        
     filew.write('<th class="bg-warning">FILA</th>')  
-    filew.write('<th class="bg-dark">COLUMNA</th>')  
+    filew.write('<th class="text-light bg-dark">COLUMNA</th>')  
     filew.write("</tr>")
     filew.write("</thead>")
     filew.write("<tbody>")
 
     #Recorrer la lista hasta la cantidad de registros a mostrar                               
     for i in v.Lista_Token:
+
+        filew.write("<tr>")          
+        filew.write("<td>")
+        filew.write(str(contador))
+        filew.write("</td>")
+        filew.write("<td>")
+        filew.write(str(i[0]))
+        filew.write("</td>")
+        filew.write("<td>")
+        filew.write(str(i[1]))
+        filew.write("</td>")   
+        filew.write("<td>")
+        filew.write(str(i[2]))
+        filew.write("</td>")
+        filew.write("<td>")
+        filew.write(str(i[3]))
+        filew.write("</td>")              
+        filew.write("</tr>")    
+
+        contador += 1                    
+                        
+    filew.write("</tbody>")
+    filew.write("</table>")
+    filew.write("</div>")
+    filew.write("<br>")
+    filew.write("<br>")
+    filew.write("</div>")
+    filew.write("</body>")        
+    filew.write("</html>")        
+    
+    #Cierre del archivo
+    filew.close()
+
+    #Abrir archivo en un navegador
+    webbrowser.open_new_tab("Token.html")  
+
+def Error_Encontrado():    
+    contador = 1
+
+    filew = open("Error.html", "w")
+
+    filew.write("<html>")
+    filew.write("<head>")
+    filew.write("<title>ERRORES</title>")
+    filew.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">')
+    filew.write('<link rel="icon" href="comando.png">')
+    filew.write("</head>")
+    filew.write("<body>")        
+    filew.write('<div class="container" style="text-align:center">')
+    filew.write("<br>")
+    filew.write("<br>")
+    filew.write('<div class="jumbotron text-light bg-dark">')
+    filew.write('<div class="container">')
+    filew.write('<h1>Reporte de Errores</h1>')
+    filew.write('<p class="lead">A continuacion se muestran los errores reconocidos por el AFD</p>')
+    filew.write("</div>")
+    filew.write("</div>")
+    filew.write('<table class="table">')
+    filew.write('<thead>')
+    filew.write("</tr>")
+    filew.write('<th class="bg-danger">NO.</th>')  
+    filew.write('<th class="bg-light">FILA</th>')
+    filew.write('<th class="bg-info">COLUMNA</th>')        
+    filew.write('<th class="bg-warning">CARACTER</th>')  
+    filew.write('<th class="text-light bg-dark">DESCRIPCION</th>')  
+    filew.write("</tr>")
+    filew.write("</thead>")
+    filew.write("<tbody>")
+
+    #Recorrer la lista hasta la cantidad de registros a mostrar                               
+    for i in v.Lista_Error:
 
         filew.write("<tr>")          
         filew.write("<td>")
@@ -401,6 +478,92 @@ def mostrarListaToken():
     filew.close()
 
     #Abrir archivo en un navegador
-    webbrowser.open_new_tab("reporte.html")  
+    webbrowser.open_new_tab("Error.html")  
+
+def Mostrar_Menu():    
+    filew = open("menu.html", "w")
+
+    filew.write("<html>")
+    filew.write("<head>")
+    filew.write("<title>Menu</title>")
+    filew.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">')
+    filew.write('<link rel="icon" href="comando.png">')
+    filew.write("</head>")
+    filew.write("<body>")        
+    filew.write('<div class="container">')
+    filew.write("<br>")
+    filew.write("<br>")
+    
+    filew.write('<div class="jumbotron text-white bg-dark">')
+    filew.write('<div class="container" style="text-align:center">')
+    for i in v.Lista_Token:
+        if "TK_NOMBRE_RES" in i:
+            cadena = '<h1 class="display-4">" '+ i[1] +' "</h1>'
+            filew.write(str(cadena))
+    filew.write("</div>")
+    filew.write("</div>")
+    sec = ""
+    nombre = ""
+    precio = float(0)
+    descripcion = ""
+    for i in v.Lista_Token:
+        if "TK_NOMBRE" in i:
+            nombre = i[1]
+        elif "TK_PRECIO" in i:
+            precio = float(i[1])
+        elif "TK_DESCRIPCION" in i:
+            descripcion = i[1]
+        elif "TK_NOMBRE_SEC" in i:
+            sec = i[1]
+        
+        nombre_sec = "<h1>" + sec + "</h1>"
+        cadena = '<h2> &nbsp &nbsp &nbsp &nbsp &nbsp' +  str(nombre) + ' &nbsp &nbsp &nbsp Q.'+  str(f"{precio:.2f}") + '</h2>'
+        desc = '&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp' + str(descripcion)
+
+        filew.write('<div class="jumbotron text-white bg-info">')
+        filew.write('<div class="container">')
+        filew.write(str(nombre_sec))
+        filew.write(str(cadena))
+        filew.write(str(desc))
+        filew.write("</div>")
+        filew.write("</div>")
+
+    
+
+    
+    filew.write("<br>")
+    filew.write("<br>")
+    filew.write("</div>")
+    filew.write("</body>")        
+    filew.write("</html>")        
+    
+    #Cierre del archivo
+    filew.close()
+
+    #Abrir archivo en un navegador
+    webbrowser.open_new_tab("menu.html")  
+
+def usoDic():
+
+    dic = {}
+    sec = ""
+    nombre = ""
+    precio = float(0)
+    desc = ""
+    
+    contador = 0
+
+    for i in v.Lista_Token:
+        if "TK_NOMBRE_SEC" in i:
+            sec = i[1]
+            lista = []
+            while v.Lista_Token[contador][1] != sec:
+                if "TK_NOMBRE" in v.Lista_Token[contador]:
+                    nombre = v.Lista_Token[contador][1]
+                    lista.append(nombre)
+                contador += 1
+            dic[sec] = {"articulo":lista}
+    
+    print(dic)
 
 Menu()

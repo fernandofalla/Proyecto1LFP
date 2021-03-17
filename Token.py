@@ -11,45 +11,47 @@ class Token:
 
     def Retornartoken(self):
         if self.token == "Restaurante":
-            return "RESERVADA_RES", self.lexema, self.fila, self.columna
+            return "TK_RESTAURANTE", self.lexema, self.fila, self.columna
         elif self.token == "igual":
-            return "SIMB_IGUAL", self.lexema, self.fila, self.columna
+            return "TK_IGUAL", self.lexema, self.fila, self.columna
         elif self.token == "porcen":
-            return "SIMB_PORCENTUAL", self.lexema, self.fila, self.columna
+            return "TK_PORCENTUAL", self.lexema, self.fila, self.columna
         elif self.token == "coma":
-            return "SIMB_COMA", self.lexema, self.fila, self.columna
+            return "TK_COMA", self.lexema, self.fila, self.columna
         elif self.token == "id":
-            return "IDENTIFICADOR", self.lexema, self.fila, self.columna
+            return "TK_IDENTIFICADOR", self.lexema, self.fila, self.columna
         elif self.token == "nombre":
-            return "NOMBRE", self.lexema, self.fila, self.columna
+            return "TK_NOMBRE", self.lexema, self.fila, self.columna
         elif self.token == "desc":
-            return "DESCRIPCION", self.lexema, self.fila, self.columna
+            return "TK_DESCRIPCION", self.lexema, self.fila, self.columna
         elif self.token == "nombre_res":
-            return "NOMBRE_RES", self.lexema, self.fila, self.columna
+            return "TK_NOMBRE_RES", self.lexema, self.fila, self.columna
         elif self.token == "nombre_sec":
-            return "NOMBRE_SEC", self.lexema, self.fila, self.columna
+            return "TK_NOMBRE_SEC", self.lexema, self.fila, self.columna
         elif self.token == "dos_puntos":
-            return "DOS_PUNTOS", self.lexema, self.fila, self.columna
+            return "TK_DOS_PUNTOS", self.lexema, self.fila, self.columna
         elif self.token == "corch_ab":
-            return "CORCHETE_AB", self.lexema, self.fila, self.columna
+            return "TK_CORCHETE_AB", self.lexema, self.fila, self.columna
         elif self.token == "punto_coma":
-            return "PUNTO_COMA", self.lexema, self.fila, self.columna
+            return "TK_PUNTO_COMA", self.lexema, self.fila, self.columna
         elif self.token == "punto":
-            return "SIMB_PUNTO", self.lexema, self.fila, self.columna
+            return "TK_PUNTO", self.lexema, self.fila, self.columna
         elif self.token == "corch_ce":
-            return "CORCHETE_CE", self.lexema, self.fila, self.columna
+            return "TK_CORCHETE_CE", self.lexema, self.fila, self.columna
         elif self.token == "numero":
-            return "NUMERO_ENTERO", self.lexema, self.fila, self.columna
+            return "TK_NUMERO_ENTERO", self.lexema, self.fila, self.columna
         elif self.token == "decimal":
-            return "NUMERO_DECIMAL", self.lexema, self.fila, self.columna
+            return "TK_NUMERO_DECIMAL", self.lexema, self.fila, self.columna
         elif self.token == "cliente":
-            return "NOMBRE_CLIENTE", self.lexema, self.fila, self.columna
+            return "TK_NOMBRE_CLIENTE", self.lexema, self.fila, self.columna
         elif self.token == "nit":
-            return "NIT_CLIENTE", self.lexema, self.fila, self.columna
+            return "TK_NIT_CLIENTE", self.lexema, self.fila, self.columna
         elif self.token == "dir":
-            return "DIRECCION_CLIENTE", self.lexema, self.fila, self.columna
+            return "TK_DIRECCION_CLIENTE", self.lexema, self.fila, self.columna
         elif self.token == "prop":
-            return "PORCENTAJE", self.lexema, self.fila, self.columna
+            return "TK_PORCENTAJE", self.lexema, self.fila, self.columna
+        elif self.token == "precio":
+            return "TK_PRECIO", self.lexema, self.fila, self.columna
         else:
             return "SIMBOLO DESCONOCIDO", self.lexema, self.fila, self.columna
         '''
