@@ -32,6 +32,7 @@ def archivo():
     nodo = "Raiz"
     cadena_nombre_res = nodo + ' [label="' + Lista_nombre_res[0] + '"]'
     file.write(str(cadena_nombre_res) + os.linesep)
+    
     for i in Lista_sec:
         cadena_escribir = nodo + " -> " + i.replace(" ","_") + ";"
         file.write(str(cadena_escribir) + os.linesep)

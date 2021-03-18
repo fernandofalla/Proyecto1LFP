@@ -112,7 +112,66 @@ def Generar_Factura():
         Error_Encontrado()
 
 def Generar_Arbol():
-    pass
+    archivo()
+
+def archivo():
+    #cantidad_sec = len(Lista_sec)
+    #index = 0
+    nombre_sec = None
+    
+    numero = 0
+    id = "menu"
+
+    file = open("reporte.dot","w")
+
+    file.write("digraph matriz{" + os.linesep)
+
+    nombre_restaurante = ""
+
+    for i in v.Lista_Token:
+        if "TK_NOMBRE_RES" == i[0]:
+            nombre_restaurante = i[1]
+
+    nodo = "Raiz"
+    cadena_nombre_res = nodo + ' [label="' + nombre_restaurante + '"]'
+    file.write(str(cadena_nombre_res) + os.linesep)
+    
+    for i in v.Lista_Sec:
+        cadena_escribir = nodo + " -> " + i.replace(" ","") + ";"
+        file.write(str(cadena_escribir) + os.linesep)
+        
+
+    index = 0
+    indice_valor = 0
+    cantidad = 0
+    precio = float(0)
+    for i in v.Lista_Cantidad_Producto:
+        valor = int(i)
+        cantidad += valor
+
+    while index < int(len(v.Lista_Sec)):
+        indice = 0
+        nombre_sec = v.Lista_Sec[index]
+        file.write(str(nombre_sec) + os.linesep)
+        cantidad_art = int(v.Lista_Cantidad_Producto[index])
+        while indice < cantidad_art:
+            nombre = v.Lista_Nom[indice_valor]
+            precio = float(v.Lista_Pre[indice_valor])
+            descrp = v.Lista_Des[indice_valor]
+            id_numero = id + str(numero)
+            cadena = id_numero + ' [label="' + nombre + '     Q.' + str(f"{precio:.2f}") + '\n' + descrp + '"]'
+            file.write(str(cadena) + os.linesep)
+            sec_nombre = nombre_sec + " -> " + id_numero + ";"
+            file.write(str(sec_nombre) + os.linesep)
+            numero += 1
+            indice_valor += 1
+            indice += 1
+        index += 1
+    
+    file.write("}")
+    file.close()
+
+    os.system("dot.exe -Tpng reporte.dot -o z.png")
 
 def AFD():
     v.entrada = v.entrada + "#"
@@ -577,6 +636,22 @@ def Mostrar_Menu():
     webbrowser.open_new_tab("menu.html")  
 
 def Retornar_Valores():
+    indice = 0
+    cantidad = len(v.Lista_Token)
+    contador = 0
+    while indice < cantidad:
+        if "TK_NOMBRE" == v.Lista_Token[indice][0]:
+            contador += 1
+        elif "TK_NOMBRE_SEC" == v.Lista_Token[indice][0]:
+            v.Lista_Cantidad_Producto.append(contador)
+            contador = 0
+        else:
+            pass
+        indice += 1
+    
+    v.Lista_Cantidad_Producto.append(contador)
+    v.Lista_Cantidad_Producto.pop(0)
+
     for i in v.Lista_Token:
         if "TK_NOMBRE_SEC" == i[0]:
             v.Lista_Sec.append(i[1])
@@ -595,13 +670,7 @@ def Retornar_Valores():
             v.Lista_Des.append(i[1])
 
 
-    print(v.Lista_Sec)
-    print
-    print(v.Lista_Nom)
-    print()
-    print(v.Lista_Pre)
-    print()
-    print(v.Lista_Des)
+    print(v.Lista_Cantidad_Producto)
 
 def usoDic():
 

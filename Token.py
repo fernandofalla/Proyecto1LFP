@@ -121,3 +121,4 @@ class Valor:
         self.Lista_Nom = []
         self.Lista_Pre = []
         self.Lista_Des = []
+        self.Lista_Cantidad_Producto = []
