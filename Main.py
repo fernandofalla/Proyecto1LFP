@@ -96,11 +96,11 @@ def Cargar_Orden():
 
 def Generar_Menu():
     AFD()
+    Retornar_Valores()
     Token_Reconocido()
     if v.Lista_Error != None:
         Error_Encontrado()
     Mostrar_Menu()
-    Retornar_Valores()
 
 def Generar_Factura():
     v.fila = 1
@@ -592,49 +592,58 @@ def Mostrar_Menu():
     filew.write('<div class="container" style="text-align:center">')
     for i in v.Lista_Token:
         if "TK_NOMBRE_RES" in i:
-            cadena = '<h1 class="display-4">" '+ i[1] +' "</h1>'
+            cadena = '<h1 class="display-4">'+ i[1] +'</h1>'
             filew.write(str(cadena))
     filew.write("</div>")
     filew.write("</div>")
-    sec = ""
-    nombre = ""
-    precio = float(0)
-    descripcion = ""
-    for i in v.Lista_Token:
-        if "TK_NOMBRE" in i:
-            nombre = i[1]
-        elif "TK_PRECIO" in i:
-            precio = float(i[1])
-        elif "TK_DESCRIPCION" in i:
-            descripcion = i[1]
-        elif "TK_NOMBRE_SEC" in i:
-            sec = i[1]
-        
-        nombre_sec = "<h1>" + sec + "</h1>"
-        cadena = '<h2> &nbsp &nbsp &nbsp &nbsp &nbsp' +  str(nombre) + ' &nbsp &nbsp &nbsp Q.'+  str(f"{precio:.2f}") + '</h2>'
-        desc = '&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp' + str(descripcion)
 
+    
+
+    nombre_sec = None
+    
+    numero = 0
+    id = "menu"
+
+    index = 0
+    indice_valor = 0
+    cantidad = 0
+    precio = float(0)
+    for i in v.Lista_Cantidad_Producto:
+        valor = int(i)
+        cantidad += valor
+    
+    while index < int(len(v.Lista_Sec)):
         filew.write('<div class="jumbotron text-white bg-info">')
         filew.write('<div class="container">')
-        filew.write(str(nombre_sec))
-        filew.write(str(cadena))
-        filew.write(str(desc))
+        indice = 0
+        nombre_sec = "<h1>" + v.Lista_Sec[index] + "<h1>"
+        filew.write("<br>")
+        filew.write(str(nombre_sec) + os.linesep)
+        cantidad_art = int(v.Lista_Cantidad_Producto[index])
+        while indice < cantidad_art:
+            nombre = v.Lista_Nom[indice_valor]
+            precio = float(v.Lista_Pre[indice_valor])
+            descrp = v.Lista_Des[indice_valor]
+            cadena = "<h2>" + nombre + '&nbsp &nbsp &nbsp &nbsp &nbsp Q.' + str(f"{precio:.2f}") + "</h2>"
+            filew.write(str(cadena) + os.linesep)
+            cad_desc  = "<h3>" + descrp + "</h3>"
+            filew.write(str(cad_desc) + os.linesep)
+            filew.write("<br>")
+            numero += 1
+            indice_valor += 1
+            indice += 1
+        index += 1
         filew.write("</div>")
         filew.write("</div>")
 
-    
-
-    
     filew.write("<br>")
     filew.write("<br>")
     filew.write("</div>")
     filew.write("</body>")        
     filew.write("</html>")        
     
-    #Cierre del archivo
     filew.close()
 
-    #Abrir archivo en un navegador
     webbrowser.open_new_tab("menu.html")  
 
 def Retornar_Valores():
