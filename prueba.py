@@ -1,4 +1,5 @@
 import os
+from PIL import Image
 
 Lista_nombre_res = ["Restaurante LFP"]
 Lista_sec = ["Bebidas","Desayunos","Almuerzos"]
@@ -32,7 +33,7 @@ def archivo():
     nodo = "Raiz"
     cadena_nombre_res = nodo + ' [label="' + Lista_nombre_res[0] + '"]'
     file.write(str(cadena_nombre_res) + os.linesep)
-    
+
     for i in Lista_sec:
         cadena_escribir = nodo + " -> " + i.replace(" ","_") + ";"
         file.write(str(cadena_escribir) + os.linesep)
@@ -69,6 +70,9 @@ def archivo():
     file.close()
 
     os.system("dot.exe -Tpng reporte.dot -o z.png")
+    
+    imagen = Image.open("z.png")
+    imagen.show()
 
 def mostrar():
     index = 0

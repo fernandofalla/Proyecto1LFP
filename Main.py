@@ -1,13 +1,12 @@
 import os
 import webbrowser
 from tkinter.filedialog import askopenfilename
+from PIL import Image
 from Token import Token
 from Token import Valor
 from Token import Error
 
 v = Valor()
-
-
 
 def Menu():
 
@@ -101,6 +100,7 @@ def Generar_Menu():
     if v.Lista_Error != None:
         Error_Encontrado()
     Mostrar_Menu()
+    Retornar_Valores()
 
 def Generar_Factura():
     v.fila = 1
@@ -115,16 +115,15 @@ def Generar_Arbol():
     archivo()
 
 def archivo():
-    #cantidad_sec = len(Lista_sec)
-    #index = 0
+
     nombre_sec = None
     
     numero = 0
     id = "menu"
 
-    file = open("reporte.dot","w")
+    file = open("arbol.dot","w")
 
-    file.write("digraph matriz{" + os.linesep)
+    file.write("digraph arbol{" + os.linesep)
 
     nombre_restaurante = ""
 
@@ -171,7 +170,10 @@ def archivo():
     file.write("}")
     file.close()
 
-    os.system("dot.exe -Tpng reporte.dot -o z.png")
+    os.system("dot.exe -Tpng arbol.dot -o Menu.png")
+
+    imagen = Image.open("Menu.png")
+    imagen.show()
 
 def AFD():
     v.entrada = v.entrada + "#"

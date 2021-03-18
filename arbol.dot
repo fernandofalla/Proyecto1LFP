@@ -1,0 +1,102 @@
+digraph arbol{
+Raiz [label="                Restaurante LFP                   "]
+Raiz -> Bebidas;
+Raiz -> Desayunos;
+Raiz -> Postres;
+Raiz -> Bebidas;
+Raiz -> Desayunos;
+Raiz -> Postres;
+Raiz -> Bebidas;
+Raiz -> Desayunos;
+Raiz -> Postres;
+Bebidas
+menu0 [label="Bebida #1     Q.11.00
+Descripcion Bebida 1"]
+Bebidas -> menu0;
+menu1 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu1;
+menu2 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu2;
+menu3 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu3;
+menu4 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu4;
+Desayunos
+menu5 [label="Desayuno 1     Q.45.00
+Descripcion Desayuno 1"]
+Desayunos -> menu5;
+menu6 [label="Desayuno 2     Q.40.00
+Descripcion Desayuno 2"]
+Desayunos -> menu6;
+menu7 [label="Desayuno 3     Q.35.00
+Descripcion Desayuno 3"]
+Desayunos -> menu7;
+ Postres
+menu8 [label="Postre 1     Q.25.00
+Descripcion Postre 1"]
+ Postres -> menu8;
+Bebidas
+menu9 [label="Bebida #1     Q.11.00
+Descripcion Bebida 1"]
+Bebidas -> menu9;
+menu10 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu10;
+menu11 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu11;
+menu12 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu12;
+menu13 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu13;
+Desayunos
+menu14 [label="Desayuno 1     Q.45.00
+Descripcion Desayuno 1"]
+Desayunos -> menu14;
+menu15 [label="Desayuno 2     Q.40.00
+Descripcion Desayuno 2"]
+Desayunos -> menu15;
+menu16 [label="Desayuno 3     Q.35.00
+Descripcion Desayuno 3"]
+Desayunos -> menu16;
+ Postres
+menu17 [label="Postre 1     Q.25.00
+Descripcion Postre 1"]
+ Postres -> menu17;
+Bebidas
+menu18 [label="Bebida #1     Q.11.00
+Descripcion Bebida 1"]
+Bebidas -> menu18;
+menu19 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu19;
+menu20 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu20;
+menu21 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu21;
+menu22 [label="Bebida #2     Q.10.50
+Descripcion Bebida 2"]
+Bebidas -> menu22;
+Desayunos
+menu23 [label="Desayuno 1     Q.45.00
+Descripcion Desayuno 1"]
+Desayunos -> menu23;
+menu24 [label="Desayuno 2     Q.40.00
+Descripcion Desayuno 2"]
+Desayunos -> menu24;
+menu25 [label="Desayuno 3     Q.35.00
+Descripcion Desayuno 3"]
+Desayunos -> menu25;
+ Postres
+menu26 [label="Postre 1     Q.25.00
+Descripcion Postre 1"]
+ Postres -> menu26;
+}
