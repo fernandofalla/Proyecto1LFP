@@ -32,7 +32,7 @@ def Menu():
     opcion = input(">> ")
 
     if opcion == "0":
-        usoDic()
+        Retornar_Valores()
         Menu()
     elif opcion == "1":
         Cargar_Menu()
@@ -130,14 +130,17 @@ def AFD():
                 v.estado = 0
             elif elemento == "=":
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 Guardar_Token("igual")
             elif elemento == ":":
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 Guardar_Token("dos_puntos")
             elif elemento == ";":
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 Guardar_Token("punto_coma")
             elif elemento == "[":
@@ -151,6 +154,7 @@ def AFD():
                 v.columna += 1
             elif elemento.isalpha():
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 1
             elif elemento.isdigit():
@@ -163,39 +167,48 @@ def AFD():
         elif v.estado == 1:
             if elemento.isalpha():
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 1
             elif elemento == " ":
                 v.columna += 1
+                v.cantidad += 1
                 v.estado = 1
             elif elemento == "=":
                 Guardar_Token("Restaurante")
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 Guardar_Token("igual")
         elif v.estado == 2:
             if elemento.isalpha():
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 2
             elif elemento.isdigit():
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 2
             elif elemento == "_":
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 2
             elif elemento == "-":
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 2
             elif elemento == " ":
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 2
             elif  elemento == "#":
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 2
             elif elemento == "'":
@@ -205,16 +218,18 @@ def AFD():
                 Guardar_Token("nombre_sec")
                 v.cadena += elemento
                 v.columna += 1
+                v.cantidad += 1
                 Guardar_Token("dos_puntos")
             elif elemento == ";":
                 Guardar_Token("nombre")
                 v.cadena += elemento
                 v.columna += 1
+                v.cantidad += 1
                 Guardar_Token("punto_coma")
             elif elemento == "]":
                 Guardar_Token("desc")
                 v.cadena += elemento
-                v.columna += 1
+                v.columna += 2
                 Guardar_Token("corch_ce")
             elif elemento == ",":
                 condicion_1 = v.cadena.replace("-", "")
@@ -223,16 +238,19 @@ def AFD():
                     Guardar_Token("cliente")
                     v.cadena += elemento
                     v.columna += 1
+                    v.cantidad += 1
                     Guardar_Token("coma")
                 elif cond.isdigit():
                     Guardar_Token("nit")
                     v.cadena += elemento
                     v.columna += 1
+                    v.cantidad += 1
                     Guardar_Token("coma")
                 elif cond.isalnum():
                     Guardar_Token("dir")
                     v.cadena += elemento
                     v.columna += 1
+                    v.cantidad += 1
                     Guardar_Token("coma")
             elif elemento == " ":
                 v.columna += 1
@@ -240,22 +258,27 @@ def AFD():
             elif elemento == "\n":
                 Guardar_Token("nombre_res")
                 v.fila += 1
+                v.columna = 1
         elif v.estado == 4:
             if elemento.isalpha():
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 4    
             elif elemento.isdigit():
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 4
             elif elemento == "_":
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 4
             elif elemento == ";":
                 Guardar_Token("id")
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 Guardar_Token("punto_coma")
             elif elemento == " ":
@@ -263,11 +286,13 @@ def AFD():
                     v.estado = 4
                 else:
                     v.columna += 1
+                    v.cantidad += 1
                     v.cadena += elemento
                     Guardar_Error("id_inv")
         elif v.estado == 5:
             if elemento.isdigit():
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 5
             elif elemento == " ":
@@ -276,42 +301,50 @@ def AFD():
             elif elemento == ";":
                 Guardar_Token("precio")
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 Guardar_Token("punto_coma")
             elif elemento == "%":
                 v.columna += 1
+                v.cantidad +=1
                 v.cadena += elemento
                 Guardar_Token("prop")
             elif elemento == ".":
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 6
         elif v.estado == 6:
             if elemento.isdigit():
                 v.columna += 1
+                v.cantidad += 1
                 v.cadena += elemento
                 v.estado = 6
             elif elemento == ";":
                 if v.cadena[-1] == ".":
                     Guardar_Token("precio")
                     v.columna += 1
+                    v.cantidad += 1
                     v.cadena += elemento
                     Guardar_Token("punto_coma")
                 else:
                     Guardar_Token("precio")
                     v.columna += 1
+                    v.cantidad += 1
                     v.cadena += elemento
                     Guardar_Token("punto_coma")
        
 
 
 def Guardar_Token(token):
-    token = Token(token, v.cadena, v.fila, v.columna)
+    token = Token(token, v.cadena, v.fila, v.columna - v.cantidad)
 
     v.Lista_Token.append(token.Retornartoken())
 
+    v.cantidad = 0
     v.cadena = ""
     v.estado = 0
+    
 
 def Guardar_Error(tipo):
     error = Error(tipo, v.fila, v.columna, v.cadena)
@@ -542,6 +575,33 @@ def Mostrar_Menu():
 
     #Abrir archivo en un navegador
     webbrowser.open_new_tab("menu.html")  
+
+def Retornar_Valores():
+    for i in v.Lista_Token:
+        if "TK_NOMBRE_SEC" == i[0]:
+            v.Lista_Sec.append(i[1])
+    
+    for i in v.Lista_Token:
+        if "TK_NOMBRE" == i[0]:
+            v.Lista_Nom.append(i[1])
+
+
+    for i in v.Lista_Token:
+        if "TK_PRECIO" == i[0]:
+            v.Lista_Pre.append(i[1])
+
+    for i in v.Lista_Token:
+        if "TK_DESCRIPCION" == i[0]:
+            v.Lista_Des.append(i[1])
+
+
+    print(v.Lista_Sec)
+    print
+    print(v.Lista_Nom)
+    print()
+    print(v.Lista_Pre)
+    print()
+    print(v.Lista_Des)
 
 def usoDic():
 

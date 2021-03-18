@@ -114,5 +114,10 @@ class Valor:
         self.aux = ""
         self.fila = 1
         self.columna = 1
+        self.cantidad = 0
         self.token = []
         self.index = 0
+        self.Lista_Sec = []
+        self.Lista_Nom = []
+        self.Lista_Pre = []
+        self.Lista_Des = []
