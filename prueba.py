@@ -11,6 +11,8 @@ def archivo():
     #cantidad_sec = len(Lista_sec)
     #index = 0
     nombre_sec = None
+    numero_sec = 0
+    id_sec = "seccion"
     numero = 0
     id = "menu"
 
@@ -27,10 +29,13 @@ def archivo():
     #    nombre_sec = i.replace(" ","")
     #    cadena = i.replace(" ","") + ";"
     #    file.write(str(cadena) + os.linesep)
-    
+    nodo = "Raiz"
+    cadena_nombre_res = nodo + ' [label="' + Lista_nombre_res[0] + '"]'
+    file.write(str(cadena_nombre_res) + os.linesep)
     for i in Lista_sec:
-        cadena = Lista_nombre_res[0].replace(" ","") + " -> " + i.replace(" ","") + ";"
-        file.write(str(cadena) + os.linesep)
+        cadena_escribir = nodo + " -> " + i.replace(" ","_") + ";"
+        file.write(str(cadena_escribir) + os.linesep)
+        numero_sec += 1
 
     index = 0
     indice_valor = 0
@@ -50,7 +55,7 @@ def archivo():
             precio = Lista_pre[indice_valor]
             descrp = Lista_des[indice_valor]
             id_numero = id + str(numero)
-            cadena = id_numero + '[label="' + nombre + '     Q.' + precio + '\n' + descrp + '"]'
+            cadena = id_numero + ' [label="' + nombre + '     Q.' + precio + '\n' + descrp + '"]'
             file.write(str(cadena) + os.linesep)
             sec_nombre = nombre_sec + " -> " + id_numero + ";"
             file.write(str(sec_nombre) + os.linesep)

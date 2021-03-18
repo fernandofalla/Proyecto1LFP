@@ -1,0 +1,27 @@
+digraph matriz{
+Raiz [label="Restaurante LFP"]
+Raiz -> Bebidas;
+Raiz -> Desayunos;
+Raiz -> Almuerzos;
+Bebidas
+menu0 [label="Bebida1     Q.1.00
+Desc Bebida1"]
+Bebidas -> menu0;
+menu1 [label="Bebida2     Q.2.00
+Desc Bebida2"]
+Bebidas -> menu1;
+Desayunos
+menu2 [label="Desayuno1     Q.5.00
+Desc Desayuno1"]
+Desayunos -> menu2;
+menu3 [label="Desayuno2     Q.4.00
+Desc Desayuno2"]
+Desayunos -> menu3;
+Almuerzos
+menu4 [label="Almuerzo1     Q.9.00
+Desc Almuerzo1"]
+Almuerzos -> menu4;
+menu5 [label="Almuerzo2     Q.9.00
+Desc Almuerzo2"]
+Almuerzos -> menu5;
+}
