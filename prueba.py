@@ -4,9 +4,40 @@ from PIL import Image
 Lista_nombre_res = ["Restaurante LFP"]
 Lista_sec = ["Bebidas","Desayunos","Almuerzos"]
 Lista_cantidad_pre = [2,2,2]
-Lista_nom = ["Bebida1","Bebida2","Desayuno1","Desayuno2","Almuerzo1","Almuerzo2"]
-Lista_pre = ["1.00","2.00","5.00","4.00","9.00","9.00"]
-Lista_des = ["Desc Bebida1","Desc Bebida2","Desc Desayuno1","Desc Desayuno2","Desc Almuerzo1","Desc Almuerzo2"]
+Lista_ide = ["bebida_1","Bebida_2","Pos_002","pos_001"]
+Lista_nom = ["Bebida1","Bebida2","Desayuno1","Desayuno2","Almuerzo1","Almuerzo2","Postre1"]
+Lista_pre = ["1.00","2.00","5.00","4.00","9.00","9.00","30.00"]
+Lista_des = ["Desc Bebida1","Desc Bebida2","Desc Desayuno1","Desc Desayuno2","Desc Almuerzo1","Desc Almuerzo2","Desc Postre 1"]
+
+cantidad_comida = [2,4]
+identificadores_factura = ["bebida_1","pos_001"]
+
+
+indice_para_calculo = None
+Lista_valor = []
+Lista_calculo = []
+
+def factura():
+    try:
+        indice_para_factura = 0
+        while indice_para_factura < len(Lista_ide):
+            if Lista_ide[indice_para_factura] in identificadores_factura:
+                indice_para_calculo = Lista_ide.index(Lista_ide[indice_para_factura])
+                Lista_valor.append(indice_para_calculo)
+            indice_para_factura += 1
+        indice__f = 0
+        for elemento in Lista_valor:
+            indice = int(elemento)
+            cantidad = int(cantidad_comida[indice__f])
+            valor = float(Lista_pre[indice])
+            calculo = cantidad * valor
+            print("Q."+str(f"{calculo:.2f}"))
+            indice__f += 1
+
+    except:
+        print()
+        
+factura()    
 
 def archivo():
     #cantidad_sec = len(Lista_sec)
@@ -101,7 +132,7 @@ def mostrar():
             indice += 1
         index += 1
 
-archivo()
+#archivo()
 
 '''
 file = open("prueba.dot","w")

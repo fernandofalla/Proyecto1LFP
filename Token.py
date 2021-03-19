@@ -52,11 +52,11 @@ class Token:
             return "TK_PORCENTAJE", self.lexema, self.fila, self.columna
         elif self.token == "precio":
             return "TK_PRECIO", self.lexema, self.fila, self.columna
+        elif self.token == "cant_producto":
+            return "TK_CANTIDAD_COMIDA", self.lexema, self.fila, self.columna
         else:
             return "SIMBOLO DESCONOCIDO", self.lexema, self.fila, self.columna
         '''
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
         elif self.token == "":
             return "", self.lexema, self.fila, self.columna
         elif self.token == "":

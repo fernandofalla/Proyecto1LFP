@@ -11,27 +11,6 @@ RESTAURANTE                                   =                      '          
 [d3;'Desayuno 3';35;'Descripcion Desayuno 3']
 ' Postres':
 [ pos_001;'Postre 1';25;'Descripcion Postre 1']
-'Bebidas':
-      [bebida_1;'Bebida #1';11.;'Descripcion Bebida 1'     ]
-                    [bebida_2;'Bebida #2';10.50;'Descripcion Bebida 2']
-                     [bebida_2;'Bebida #2';10.50;'Descripcion Bebida 2'                     ]
-                      [bebida_2;'Bebida #2';10.50;'Descripcion Bebida 2'                ]
-                       [bebida_2;'Bebida #2';10.50;'Descripcion Bebida 2'                                                   ]
-'Desayunos':
-[dedo1;'Desayuno 1'     ;        45.00;'Descripcion Desayuno 1']
-[d2;'Desayuno 2';40.         ;                'Descripcion Desayuno 2'      ]
-[d3;'Desayuno 3';35;'Descripcion Desayuno 3']
-' Postres':
-[ pos_001;'Postre 1';25;'Descripcion Postre 1']
-'Bebidas':
-      [bebida_1;'Bebida #1';11.;'Descripcion Bebida 1'     ]
-                    [bebida_2;'Bebida #2';10.50;'Descripcion Bebida 2']
-                     [bebida_2;'Bebida #2';10.50;'Descripcion Bebida 2'                     ]
-                      [bebida_2;'Bebida #2';10.50;'Descripcion Bebida 2'                ]
-                       [bebida_2;'Bebida #2';10.50;'Descripcion Bebida 2'                                                   ]
-'Desayunos':
-[dedo1;'Desayuno 1'     ;        45.00;'Descripcion Desayuno 1']
-[d2;'Desayuno 2';40.         ;                'Descripcion Desayuno 2'      ]
-[d3;'Desayuno 3';35;'Descripcion Desayuno 3']
-' Postres':
-[ pos_001;'Postre 1';25;'Descripcion Postre 1']
+
+'Almuerzos':
+[Carne1;          'Carne asada' ; 30; 'Almuerzo con carne asada y acompañamiento']
