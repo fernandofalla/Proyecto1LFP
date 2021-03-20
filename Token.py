@@ -101,6 +101,8 @@ class Error:
     def Retornar_Error(self):
         if self.tipo == "id_inv":
             return self.fila, self.columna, self.caracter, "Identificador no valido"
+        elif self.tipo == "":
+            return self.fila, self.columna, self.caracter, "Simbolo desconocido"
        
 class Valor:
 

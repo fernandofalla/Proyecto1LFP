@@ -97,10 +97,13 @@ def Cargar_Orden():
 def Generar_Menu():
     AFD()
     Retornar_Valores()
-    Token_Reconocido()
-    if v.Lista_Error != None:
+    
+    if v.Lista_Error:
         Error_Encontrado()
-    Mostrar_Menu()
+    else:
+        Token_Reconocido()
+        Mostrar_Menu()
+        
 
 def Generar_Factura():
     v.fila = 1
@@ -225,6 +228,14 @@ def AFD():
             elif elemento == "'":
                 v.columna += 1
                 v.estado = 2
+            elif elemento == "#":
+                print("Archivo Analizado")
+                break
+            else:
+                v.cadena += elemento
+                v.columna += 1
+                v.cantidad += 1
+                Guardar_Error("")
         elif v.estado == 1:
             if elemento.isalpha():
                 v.columna += 1
@@ -241,6 +252,12 @@ def AFD():
                 v.cantidad += 1
                 v.cadena += elemento
                 Guardar_Token("igual")
+            else:
+                Guardar_Token("Restaurante")
+                v.cadena += elemento
+                v.columna += 1
+                v.cantidad += 1
+                Guardar_Error("")
         elif v.estado == 2:
             if elemento.isalpha():
                 v.columna += 1
@@ -509,12 +526,12 @@ def Guardar_Token(token):
     v.cadena = ""
     v.estado = 0
     
-
 def Guardar_Error(tipo):
-    error = Error(tipo, v.fila, v.columna, v.cadena)
+    error = Error(tipo, v.fila, v.columna - v.cantidad, v.cadena)
 
     v.Lista_Error.append(error.Retornar_Error())
 
+    v.cantidad = 0
     v.cadena = ""
     v.estado = 0
 

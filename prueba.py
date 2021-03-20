@@ -1,4 +1,5 @@
 import os
+import webbrowser
 from PIL import Image
 
 Lista_nombre_res = ["Restaurante LFP"]
@@ -50,13 +51,15 @@ def factura():
             cantidad = int(cantidad_comida[indice__f])
             valor = float(Lista_pre[indice])
             calculo = cantidad * valor
-            print("Q."+str(f"{calculo:.2f}"))
+            print("Q"+str(f"{calculo:.2f}"))
             indice__f += 1
 
     except:
         print()
         
 #factura()    
+
+
 
 def archivo():
     #cantidad_sec = len(Lista_sec)
@@ -186,7 +189,7 @@ def Mostrar_Factura():
     filew.write("<br>")
     
     filew.write('<div class="card text-white bg-warning">')
-    filew.write('<div class="container">')
+    filew.write('<div class="card-body">')
     #for i in v.Lista_Token:
     #    if "TK_NOMBRE_RES" in i:
     #        cadena = '<h1 class="display-4">'+ i[1] +'</h1>'
@@ -204,62 +207,61 @@ def Mostrar_Factura():
     filew.write('<table class="table">')
     filew.write('<thead>')
     filew.write('<tr>')
-    filew.write('<th scope="col">')
+    filew.write('<th scope="col">Cantidad')
     filew.write('</th>')
-    filew.write('<th scope="col">')
+    filew.write('<th scope="col">Concepto')
     filew.write('</th>')
-    filew.write('<th scope="col">')
+    filew.write('<th scope="col">Precio')
     filew.write('</th>')
-    filew.write('<th scope="col">')
+    filew.write('<th scope="col">Total')
     filew.write('</th>')
     filew.write('<tr>')
+    filew.write('</thead>')
+    filew.write('<tbody>')
+    filew.write('<tr>')
+    filew.write('<th scope="row"> 2 </th>')
+    filew.write('<td> Bebida 1 </td>')
+    filew.write('<td> Q11.00 </td>')
+    filew.write('<td> Q22.00 </td>')
+    filew.write('</tr>')
+    filew.write('<tr>')
+    filew.write('<th scope="row"> 4 </th>')
+    filew.write('<td> Postre 2 </td>')
+    filew.write('<td> Q20.00 </td>')
+    filew.write('<td> Q80.00 </td>')
+    filew.write('</tr>')
+    filew.write('<hr>')
+    filew.write('<tr>')
+    filew.write('<th scope="row"> Sub Total </th>')
+    filew.write('<td>  </td>')
+    filew.write('<td>  </td>')
+    filew.write('<td> Q102.00 </td>')
+    filew.write('</tr>')
+    filew.write('<tr>')
+    filew.write('<th scope="row"> Propina (8%) </th>')
+    filew.write('<td>  </td>')
+    filew.write('<td>  </td>')
+    filew.write('<td> Q102.00 </td>')
+    filew.write('</tr>')
+    filew.write('<hr>')
+    filew.write('<tr>')
+    filew.write('<th scope="row"> Total </th>')
+    filew.write('<td>  </td>')
+    filew.write('<td>  </td>')
+    filew.write('<td> Q110.00 </td>')
+    filew.write('</tr>')
+    filew.write('</tbody>')
+    filew.write('</table>')
     filew.write("</div>")
     filew.write("</div>")
-
-    nombre_sec = None
-    
-    numero = 0
-    id = "menu"
-
-    index = 0
-    indice_valor = 0
-    cantidad = 0
-    precio = float(0)
-    for i in v.Lista_Cantidad_Producto:
-        valor = int(i)
-        cantidad += valor
-    
-    while index < int(len(v.Lista_Sec)):
-        filew.write('<div class="jumbotron text-white bg-info">')
-        filew.write('<div class="container">')
-        indice = 0
-        nombre_sec = "<h1>" + v.Lista_Sec[index] + "<h1>"
-        filew.write("<br>")
-        filew.write(str(nombre_sec) + os.linesep)
-        cantidad_art = int(v.Lista_Cantidad_Producto[index])
-        while indice < cantidad_art:
-            nombre = v.Lista_Nom[indice_valor]
-            precio = float(v.Lista_Pre[indice_valor])
-            descrp = v.Lista_Des[indice_valor]
-            cadena = "<h2>" + nombre + '&nbsp &nbsp &nbsp &nbsp &nbsp Q.' + str(f"{precio:.2f}") + "</h2>"
-            filew.write(str(cadena) + os.linesep)
-            cad_desc  = "<h3>" + descrp + "</h3>"
-            filew.write(str(cad_desc) + os.linesep)
-            filew.write("<br>")
-            numero += 1
-            indice_valor += 1
-            indice += 1
-        index += 1
-        filew.write("</div>")
-        filew.write("</div>")
-
-    filew.write("<br>")
-    filew.write("<br>")
     filew.write("</div>")
     filew.write("</body>")        
     filew.write("</html>")        
 
     filew.close()
 
-    webbrowser.open_new_tab("menu.html")  
+    webbrowser.open_new_tab("factura.html")  
 
+#Mostrar_Factura()
+
+print(chr(39))
