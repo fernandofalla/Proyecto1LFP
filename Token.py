@@ -49,7 +49,7 @@ class Token:
         elif self.token == "dir":
             return "TK_DIRECCION_CLIENTE", self.lexema, self.fila, self.columna
         elif self.token == "prop":
-            return "TK_PORCENTAJE", self.lexema, self.fila, self.columna
+            return "TK_PROPINA", self.lexema, self.fila, self.columna
         elif self.token == "precio":
             return "TK_PRECIO", self.lexema, self.fila, self.columna
         elif self.token == "cant_producto":
@@ -117,6 +117,7 @@ class Valor:
         self.cantidad = 0
         self.token = []
         self.index = 0
+        self.Lista_Ide = []
         self.Lista_Sec = []
         self.Lista_Nom = []
         self.Lista_Pre = []

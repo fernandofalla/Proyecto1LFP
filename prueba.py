@@ -7,7 +7,8 @@ Lista_cantidad_pre = [2,2,2]
 Lista_ide = ["bebida_1","Bebida_2","Pos_002","pos_001"]
 Lista_nom = ["Bebida1","Bebida2","Desayuno1","Desayuno2","Almuerzo1","Almuerzo2","Postre1"]
 Lista_pre = ["1.00","2.00","5.00","4.00","9.00","9.00","30.00"]
-Lista_des = ["Desc Bebida1","Desc Bebida2","Desc Desayuno1","Desc Desayuno2","Desc Almuerzo1","Desc Almuerzo2","Desc Postre 1"]
+Lista_des = ["Desc @Bebida1","Desc Bebida2","Desc Desayuno1","Desc Desayuno2","Desc Almuerzo1","Desc Almuerzo2","Desc Postre 1"]
+Lista_dom = ["1 av. 4-33 zona 3, Fraijanes, Guatemala"]
 
 cantidad_comida = [2,4]
 identificadores_factura = ["bebida_1","pos_001"]
@@ -16,6 +17,24 @@ identificadores_factura = ["bebida_1","pos_001"]
 indice_para_calculo = None
 Lista_valor = []
 Lista_calculo = []
+
+cadena_cliente = "Luis Fernando"
+cadena_nit = "12323223"
+cadena_domicilio = "1 av. 4-33 zona 3, Fraijanes"
+cadena_propina = "8%"
+cadena_identificador = "pos_001"
+
+#print(cadena_cliente.replace(" ","").isalpha())
+#print(cadena_nit.replace("-","").isdigit())
+#print(cadena_domicilio.isidentifier())
+#print(cadena_propina.replace("%","").isdigit())
+
+#print(cadena_identificador.isidentifier())
+
+
+#for i in Lista_dom:
+#    if i == chr(44) or i == chr(45) or i == chr(46) :
+#        print("Hello")
 
 def factura():
     try:
@@ -37,7 +56,7 @@ def factura():
     except:
         print()
         
-factura()    
+#factura()    
 
 def archivo():
     #cantidad_sec = len(Lista_sec)
@@ -152,5 +171,95 @@ os.system("dot.exe -Tpng prueba.dot -o prueba.png")
 #mostrar()
 #archivo()
 
+def Mostrar_Factura():
+    filew = open("factura.html", "w")
 
+    filew.write("<html>")
+    filew.write("<head>")
+    filew.write("<title>Factura</title>")
+    filew.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">')
+    filew.write('<link rel="icon" href="comando.png">')
+    filew.write("</head>")
+    filew.write("<body>")        
+    filew.write('<div class="container">')
+    filew.write("<br>")
+    filew.write("<br>")
+    
+    filew.write('<div class="card text-white bg-warning">')
+    filew.write('<div class="container">')
+    #for i in v.Lista_Token:
+    #    if "TK_NOMBRE_RES" in i:
+    #        cadena = '<h1 class="display-4">'+ i[1] +'</h1>'
+    #       filew.write(str(cadena))
+    filew.write('<center><h5 class="card-title">Restaurante LFP</h5></center>')
+    filew.write('<center><h5 class="card-title">Factura No. 01</h5></center>')
+    filew.write('<center><h5 class="card-title">Fecha 20/03/2021</h5></center>')
+    filew.write('<br>')
+    filew.write('<p class="card-text">Datos del Cliente</p>')
+    filew.write('<p class="card-text">Nombre: Luis Falla</p>')
+    filew.write('<p class="card-text">Nit: 203211232432</p>')
+    filew.write('<p class="card-text">Direccion: 1 av 4-33 zona 3</p>')
+    filew.write('<br>')
+    filew.write('Descripcion')
+    filew.write('<table class="table">')
+    filew.write('<thead>')
+    filew.write('<tr>')
+    filew.write('<th scope="col">')
+    filew.write('</th>')
+    filew.write('<th scope="col">')
+    filew.write('</th>')
+    filew.write('<th scope="col">')
+    filew.write('</th>')
+    filew.write('<th scope="col">')
+    filew.write('</th>')
+    filew.write('<tr>')
+    filew.write("</div>")
+    filew.write("</div>")
+
+    nombre_sec = None
+    
+    numero = 0
+    id = "menu"
+
+    index = 0
+    indice_valor = 0
+    cantidad = 0
+    precio = float(0)
+    for i in v.Lista_Cantidad_Producto:
+        valor = int(i)
+        cantidad += valor
+    
+    while index < int(len(v.Lista_Sec)):
+        filew.write('<div class="jumbotron text-white bg-info">')
+        filew.write('<div class="container">')
+        indice = 0
+        nombre_sec = "<h1>" + v.Lista_Sec[index] + "<h1>"
+        filew.write("<br>")
+        filew.write(str(nombre_sec) + os.linesep)
+        cantidad_art = int(v.Lista_Cantidad_Producto[index])
+        while indice < cantidad_art:
+            nombre = v.Lista_Nom[indice_valor]
+            precio = float(v.Lista_Pre[indice_valor])
+            descrp = v.Lista_Des[indice_valor]
+            cadena = "<h2>" + nombre + '&nbsp &nbsp &nbsp &nbsp &nbsp Q.' + str(f"{precio:.2f}") + "</h2>"
+            filew.write(str(cadena) + os.linesep)
+            cad_desc  = "<h3>" + descrp + "</h3>"
+            filew.write(str(cad_desc) + os.linesep)
+            filew.write("<br>")
+            numero += 1
+            indice_valor += 1
+            indice += 1
+        index += 1
+        filew.write("</div>")
+        filew.write("</div>")
+
+    filew.write("<br>")
+    filew.write("<br>")
+    filew.write("</div>")
+    filew.write("</body>")        
+    filew.write("</html>")        
+
+    filew.close()
+
+    webbrowser.open_new_tab("menu.html")  
 

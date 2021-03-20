@@ -106,7 +106,7 @@ def Generar_Factura():
     v.fila = 1
     v.columna = 1
     v.cadena = ""
-    AFD()
+    AFD_FACTURA()
     Token_Reconocido()
     if v.Lista_Error != None:
         Error_Encontrado()
@@ -395,7 +395,110 @@ def AFD():
                     v.cadena += elemento
                     Guardar_Token("punto_coma")
        
-
+def AFD_FACTURA():
+    v.entrada = v.entrada + "#"
+    for elemento in v.entrada:
+        if v.estado == 0:
+            if elemento == "\n":
+                v.fila += 1
+                v.columna = 1
+                v.estado = 0
+            elif elemento == "\t":
+                v.columna += 1
+                v.estado = 0
+            elif elemento == "'":
+                v.estado = 1
+            elif elemento.isdigit():
+                v.cadena += elemento
+                v.cantidad += 1
+                v.columna += 1
+                v.estado = 2
+            elif elemento.isalpha():
+                v.cadena += elemento
+                v.columna += 1
+                v.cantidad += 1
+                v.estado = 3
+        elif v.estado == 1:
+            if elemento.isalpha():
+                v.cadena += elemento
+                v.cantidad += 1
+                v.columna += 1
+                v.estad0 = 1
+            elif elemento.isdigit():
+                v.cantidad += 1
+                v.cadena += elemento
+                v.columna += 1
+                v.estado = 1
+            elif elemento == " ":
+                v.cantidad += 1
+                v.cadena += elemento
+                v.columna += 1
+                v.estado = 1
+            elif elemento == "-":
+                v.cadena += elemento
+                v.cantidad +=1
+                v.columna += 1
+                v.estado = 1
+            elif elemento == ".":
+                v.cadena += elemento
+                v.cantidad += 1
+                v.columna += 1
+                v.estado = 1
+            elif elemento == ",":
+                v.cadena += elemento
+                v.cantidad += 1
+                v.columna += 1
+                v.estado = 1
+            elif elemento == "'":
+                v.columna += 1
+                if v.cadena.replace(" ","").isalpha():
+                    Guardar_Token("cliente")
+                elif v.cadena.replace("-","").isdigit():
+                    Guardar_Token("nit")
+                else:
+                    Guardar_Token("dir")
+        elif v.estado == 2:
+            if elemento.isdigit():
+                v.cadena += elemento
+                v.columna += 1
+                v.cantidad += 1
+                v.estado = 2
+            elif elemento == " ":
+                v.columna += 1
+                v.estado = 2
+            elif elemento == ",":
+                Guardar_Token("cant_producto")
+                v.cadena += elemento
+                v.columna += 1
+                v.cantidad += 1
+                Guardar_Token("coma")
+            elif elemento == "%":
+                v.cadena += elemento
+                v.columna += 1
+                v.cantidad += 1
+                Guardar_Token("prop")
+        elif v.estado == 3:
+            if elemento.isalpha():
+                v.cadena += elemento
+                v.cantidad += 1
+                v.columna += 1
+                v.estado = 3
+            elif elemento.isdigit():
+                v.cadena += elemento
+                v.cantidad += 1
+                v.columna += 1
+                v.estado = 3
+            elif elemento == "_":
+                v.cadena += elemento
+                v.cantidad += 1
+                v.columna += 1
+                v.estado = 3
+            elif elemento == " ":
+                v.columna += 1
+                v.estado = 3
+            else:
+                if v.cadena.isidentifier():
+                    Guardar_Token("id")     
 
 def Guardar_Token(token):
     token = Token(token, v.cadena, v.fila, v.columna - v.cantidad)
@@ -597,7 +700,115 @@ def Mostrar_Menu():
     filew.write("</div>")
     filew.write("</div>")
 
+    nombre_sec = None
     
+    numero = 0
+    id = "menu"
+
+    index = 0
+    indice_valor = 0
+    cantidad = 0
+    precio = float(0)
+    for i in v.Lista_Cantidad_Producto:
+        valor = int(i)
+        cantidad += valor
+    
+    while index < int(len(v.Lista_Sec)):
+        filew.write('<div class="jumbotron text-white bg-info">')
+        filew.write('<div class="container">')
+        indice = 0
+        nombre_sec = "<h1>" + v.Lista_Sec[index] + "<h1>"
+        filew.write("<br>")
+        filew.write(str(nombre_sec) + os.linesep)
+        cantidad_art = int(v.Lista_Cantidad_Producto[index])
+        while indice < cantidad_art:
+            nombre = v.Lista_Nom[indice_valor]
+            precio = float(v.Lista_Pre[indice_valor])
+            descrp = v.Lista_Des[indice_valor]
+            cadena = "<h2>" + nombre + '&nbsp &nbsp &nbsp &nbsp &nbsp Q.' + str(f"{precio:.2f}") + "</h2>"
+            filew.write(str(cadena) + os.linesep)
+            cad_desc  = "<h3>" + descrp + "</h3>"
+            filew.write(str(cad_desc) + os.linesep)
+            filew.write("<br>")
+            numero += 1
+            indice_valor += 1
+            indice += 1
+        index += 1
+        filew.write("</div>")
+        filew.write("</div>")
+
+    filew.write("<br>")
+    filew.write("<br>")
+    filew.write("</div>")
+    filew.write("</body>")        
+    filew.write("</html>")        
+
+    filew.close()
+
+    webbrowser.open_new_tab("menu.html")  
+
+def Retornar_Valores():
+    indice = 0
+    cantidad = len(v.Lista_Token)
+    contador = 0
+    while indice < cantidad:
+        if "TK_NOMBRE" == v.Lista_Token[indice][0]:
+            contador += 1
+        elif "TK_NOMBRE_SEC" == v.Lista_Token[indice][0]:
+            v.Lista_Cantidad_Producto.append(contador)
+            contador = 0
+        else:
+            pass
+        indice += 1
+    
+    v.Lista_Cantidad_Producto.append(contador)
+    v.Lista_Cantidad_Producto.pop(0)
+
+    for i in v.Lista_Token:
+        if "TK_IDENTIFICADOR" == i[0]:
+            v.Lista_Ide.append(i[1])
+
+    for i in v.Lista_Token:
+        if "TK_NOMBRE_SEC" == i[0]:
+            v.Lista_Sec.append(i[1])
+    
+    for i in v.Lista_Token:
+        if "TK_NOMBRE" == i[0]:
+            v.Lista_Nom.append(i[1])
+
+
+    for i in v.Lista_Token:
+        if "TK_PRECIO" == i[0]:
+            v.Lista_Pre.append(i[1])
+
+    for i in v.Lista_Token:
+        if "TK_DESCRIPCION" == i[0]:
+            v.Lista_Des.append(i[1])
+
+    print(v.Lista_Ide)
+
+def Mostrar_Factura():
+    filew = open("factura.html", "w")
+
+    filew.write("<html>")
+    filew.write("<head>")
+    filew.write("<title>Factura</title>")
+    filew.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">')
+    filew.write('<link rel="icon" href="comando.png">')
+    filew.write("</head>")
+    filew.write("<body>")        
+    filew.write('<div class="container">')
+    filew.write("<br>")
+    filew.write("<br>")
+    
+    filew.write('<div class="jumbotron text-white bg-dark">')
+    filew.write('<div class="container" style="text-align:center">')
+    for i in v.Lista_Token:
+        if "TK_NOMBRE_RES" in i:
+            cadena = '<h1 class="display-4">'+ i[1] +'</h1>'
+            filew.write(str(cadena))
+    filew.write("</div>")
+    filew.write("</div>")
 
     nombre_sec = None
     
@@ -641,47 +852,10 @@ def Mostrar_Menu():
     filew.write("</div>")
     filew.write("</body>")        
     filew.write("</html>")        
-    
+
     filew.close()
 
-    webbrowser.open_new_tab("menu.html")  
-
-def Retornar_Valores():
-    indice = 0
-    cantidad = len(v.Lista_Token)
-    contador = 0
-    while indice < cantidad:
-        if "TK_NOMBRE" == v.Lista_Token[indice][0]:
-            contador += 1
-        elif "TK_NOMBRE_SEC" == v.Lista_Token[indice][0]:
-            v.Lista_Cantidad_Producto.append(contador)
-            contador = 0
-        else:
-            pass
-        indice += 1
-    
-    v.Lista_Cantidad_Producto.append(contador)
-    v.Lista_Cantidad_Producto.pop(0)
-
-    for i in v.Lista_Token:
-        if "TK_NOMBRE_SEC" == i[0]:
-            v.Lista_Sec.append(i[1])
-    
-    for i in v.Lista_Token:
-        if "TK_NOMBRE" == i[0]:
-            v.Lista_Nom.append(i[1])
-
-
-    for i in v.Lista_Token:
-        if "TK_PRECIO" == i[0]:
-            v.Lista_Pre.append(i[1])
-
-    for i in v.Lista_Token:
-        if "TK_DESCRIPCION" == i[0]:
-            v.Lista_Des.append(i[1])
-
-
-    print(v.Lista_Cantidad_Producto)
+    webbrowser.open_new_tab("factura.html")  
 
 def usoDic():
 
