@@ -16,9 +16,8 @@ Lista_des = ["Desc @Bebida1","Desc Bebida2","Desc Desayuno1","Desc Desayuno2","D
 
 Lista_dom = ["1 av. 4-33 zona 3, Fraijanes, Guatemala"]
 
-cantidad_comida = [2,4]
-identificadores_factura = ["bebida_1","Pos_002"]
-
+cantidad_comida = [2,4,5]
+identificadores_factura = ["bebida_1","Pos_002","Bebida_2"]
 
 indice_para_calculo = None
 Lista_valor = []
@@ -213,7 +212,7 @@ def Mostrar_Factura():
     filew.write("<br>")
     filew.write("<br>")
     
-    filew.write('<div class="card text-white bg-warning">')
+    filew.write('<div class="card text-white bg-dark">')
     filew.write('<div class="card-body">')
     #for i in v.Lista_Token:
     #    if "TK_NOMBRE_RES" in i:
@@ -228,9 +227,9 @@ def Mostrar_Factura():
     filew.write('<p class="card-text">Nit: 203211232432</p>')
     filew.write('<p class="card-text">Direccion: 1 av 4-33 zona 3</p>')
     filew.write('<br>')
-    filew.write('Descripcion')
-    filew.write('<table class="table">')
-    filew.write('<thead>')
+    filew.write('<strong>Descripcion</strong>')
+    filew.write('<table class="table text-white">')
+    #filew.write('<thead>')
     filew.write('<tr>')
     filew.write('<th scope="col">Cantidad')
     filew.write('</th>')
@@ -241,8 +240,8 @@ def Mostrar_Factura():
     filew.write('<th scope="col">Total')
     filew.write('</th>')
     filew.write('<tr>')
-    filew.write('</thead>')
-    filew.write('<tbody>')
+    #filew.write('</thead>')
+    #filew.write('<tbody>')
     filew.write('<tr>')
     filew.write('<th scope="row"> 2 </th>')
     filew.write('<td> Bebida 1 </td>')
@@ -255,7 +254,6 @@ def Mostrar_Factura():
     filew.write('<td> Q20.00 </td>')
     filew.write('<td> Q80.00 </td>')
     filew.write('</tr>')
-    filew.write('<hr>')
     filew.write('<tr>')
     filew.write('<th scope="row"> Sub Total </th>')
     filew.write('<td>  </td>')
@@ -266,16 +264,15 @@ def Mostrar_Factura():
     filew.write('<th scope="row"> Propina (8%) </th>')
     filew.write('<td>  </td>')
     filew.write('<td>  </td>')
-    filew.write('<td> Q102.00 </td>')
+    filew.write('<td> Q8.00 </td>')
     filew.write('</tr>')
-    filew.write('<hr>')
     filew.write('<tr>')
     filew.write('<th scope="row"> Total </th>')
     filew.write('<td>  </td>')
     filew.write('<td>  </td>')
     filew.write('<td> Q110.00 </td>')
     filew.write('</tr>')
-    filew.write('</tbody>')
+    #filew.write('</tbody>')
     filew.write('</table>')
     filew.write("</div>")
     filew.write("</div>")
@@ -287,6 +284,6 @@ def Mostrar_Factura():
 
     webbrowser.open_new_tab("factura.html")  
 
-#Mostrar_Factura()
+Mostrar_Factura()
 
 #print(chr(39))

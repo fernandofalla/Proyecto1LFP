@@ -829,7 +829,7 @@ def Mostrar_Factura():
     filew.write("<br>")
     filew.write("<br>")
     
-    filew.write('<div class="card text-white bg-warning">')
+    filew.write('<div class="card text-white bg-dark">')
     filew.write('<div class="card-body">')
     for i in v.Lista_Token:
         if "TK_NOMBRE_RES" in i:
@@ -858,7 +858,7 @@ def Mostrar_Factura():
 
     filew.write('<br>')
     filew.write('Descripcion')
-    filew.write('<table class="table">')
+    filew.write('<table class="table text-white">')
     filew.write('<thead>')
     filew.write('<tr>')
     filew.write('<th scope="col">Cantidad')
@@ -884,7 +884,7 @@ def Mostrar_Factura():
         for elemento in v.Lista_valor:
             indice = int(elemento)
             cantidad = int(v.Cantidad_comida[indice__f])
-            concepto = v.Lista_Nom[indice]
+            concepto = v.Lista_Nom[indice__f]
             valor = float(v.Lista_Pre[indice])
             calculo = cantidad * valor
             v.Lista_calculo.append(calculo)
@@ -937,7 +937,7 @@ def Mostrar_Factura():
     filew.write('<td>  </td>')
     filew.write('<td>  </td>')
     valor_total_con_propina = valor_total + total_propina
-    cadena_valor_total = '<td>'+ str(f"{valor_total_con_propina:.2f}") +'</td>'
+    cadena_valor_total = '<td>Q'+ str(f"{valor_total_con_propina:.2f}") +'</td>'
     filew.write(str(cadena_valor_total))
     filew.write('</tr>')
     filew.write('</tbody>')
