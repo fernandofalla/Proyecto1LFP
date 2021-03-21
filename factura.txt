@@ -1,3 +1,3 @@
 'Luis Falla', '2332323232', '1 av. 4-33 zona 3, Fraijanes', 12%
-2, bebida_1
+2,bebida_1
 4,pos_001

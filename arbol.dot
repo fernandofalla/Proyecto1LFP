@@ -1,5 +1,5 @@
 digraph arbol{
-Raiz [label="Restaurante LFP                   "]
+Raiz [label="Restaurante LFP"]
 Raiz -> Bebidas;
 Raiz -> Desayunos;
 Raiz -> Postres;
@@ -9,21 +9,18 @@ menu0 [label="Bebida #1     Q.11.00
 Descripcion Bebida 1"]
 Bebidas -> menu0;
 Desayunos
-menu1 [label="Desayuno 1     Q.45.00
-Descripcion Desayuno 1"]
-Desayunos -> menu1;
-menu2 [label="Desayuno 2     Q.40.00
+menu1 [label="Desayuno 1     Q.1.00
 Descripcion Desayuno 2"]
-Desayunos -> menu2;
-menu3 [label="Desayuno 3     Q.35.00
+Desayunos -> menu1;
+menu2 [label="Desayuno 2     Q.0.00
 Descripcion Desayuno 3"]
-Desayunos -> menu3;
- Postres
-menu4 [label="Postre 1     Q.25.00
+Desayunos -> menu2;
+menu3 [label="Desayuno 3     Q.40.00
 Descripcion Postre 1"]
- Postres -> menu4;
-Almuerzos
-menu5 [label="Carne asada     Q.30.00
+Desayunos -> menu3;
+Postres
+menu4 [label="Postre 1     Q.35.00
 Almuerzo con carne asada y acompaÃamiento"]
-Almuerzos -> menu5;
+Postres -> menu4;
+Almuerzos
 }

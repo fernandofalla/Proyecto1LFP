@@ -113,6 +113,8 @@ class Valor:
         self.estado = 0
         self.Lista_Token = []
         self.Lista_Error = []
+        self.Lista_Token_Factura = []
+        self.Lista_Error_Factura = []
         self.aux = ""
         self.fila = 1
         self.columna = 1
