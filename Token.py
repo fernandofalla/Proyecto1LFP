@@ -126,3 +126,7 @@ class Valor:
         self.Lista_Des = []
         self.Lista_Cantidad_Producto = []
         self.cantidad_factura = 1
+        self.Lista_valor = []
+        self.Lista_calculo = []
+        self.Identificadores_factura = []
+        self.Cantidad_comida = []

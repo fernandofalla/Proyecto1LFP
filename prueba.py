@@ -10,14 +10,14 @@ Lista_sec = ["Bebidas","Desayunos","Almuerzos"]
 Lista_cantidad_pre = [2,2,2]
 
 Lista_ide = ["bebida_1","Bebida_2","Pos_002","pos_001"]
-Lista_nom = ["Bebida1","Bebida2","Desayuno1","Desayuno2","Almuerzo1","Almuerzo2","Postre1"]
+Lista_nom = ["Bebida1","Bebida2","Postre1"]
 Lista_pre = ["1.00","2.00","5.00","4.00","9.00","9.00","30.00"]
 Lista_des = ["Desc @Bebida1","Desc Bebida2","Desc Desayuno1","Desc Desayuno2","Desc Almuerzo1","Desc Almuerzo2","Desc Postre 1"]
 
 Lista_dom = ["1 av. 4-33 zona 3, Fraijanes, Guatemala"]
 
 cantidad_comida = [2,4]
-identificadores_factura = ["bebida_1","pos_001"]
+identificadores_factura = ["bebida_1","Pos_002"]
 
 
 indice_para_calculo = None
@@ -36,7 +36,7 @@ today = date.today()
 
 now = datetime.now()
 
-print(str(today.day)+str("/")+str(today.month)+str("/")+str(today.year))
+#print(str(today.day)+str("/")+str(today.month)+str("/")+str(today.year))
 
 
 
@@ -69,19 +69,20 @@ def factura():
         indice__f = 0
         for elemento in Lista_valor:
             indice = int(elemento)
-            
+            print(indice)
             cantidad = int(cantidad_comida[indice__f])
             concepto = Lista_nom[indice]
             valor = float(Lista_pre[indice])
             calculo = cantidad * valor
+            Lista_calculo.append(calculo)
 
-            print(cantidad," ",concepto," ",valor," Q"+str(f"{calculo:.2f}"))
+            print(cantidad," ",concepto," "+str(f"{valor:.2f}")+" Q"+str(f"{calculo:.2f}"))
             indice__f += 1
 
     except:
         print()
         
-#factura()    
+factura()    
 
 
 
@@ -90,7 +91,7 @@ def archivo():
     #index = 0
     nombre_sec = None
     numero_sec = 0
-    id_sec = "seccion"
+    #id_sec = "seccion"
     numero = 0
     id = "menu"
 

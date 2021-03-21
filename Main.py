@@ -14,13 +14,12 @@ def Menu():
 
     print()
     print()
-    print("                 Proyecto 1 - LFP A+")
+    print("                Proyecto 1 - LFP A+")
     print("     ------------------------------------------")
     print("     |   Nombre: Luis Fernando Falla Guzmán   |")
     print("     |   Carné: 201700700                     |")
     print("     ------------------------------------------")
     print()
-    print("0. Mostrar")
     print("1. Cargar menú")
     print("2. Cargar orden")
     print("3. Generar menú")
@@ -32,10 +31,7 @@ def Menu():
     
     opcion = input(">> ")
 
-    if opcion == "0":
-        Retornar_Valores()
-        Menu()
-    elif opcion == "1":
+    if opcion == "1":
         Cargar_Menu()
         Menu()
     elif opcion == "2":
@@ -112,10 +108,12 @@ def Generar_Factura():
     v.columna = 1
     v.cadena = ""
     AFD_FACTURA()
-    Token_Reconocido()
+    Retornar_Valores_Factura()
+    
     if v.Lista_Error:
         Error_Encontrado()
     else:
+        Token_Reconocido()
         Mostrar_Factura()
 
 def Generar_Arbol():
@@ -720,7 +718,7 @@ def Mostrar_Menu():
     nombre_sec = None
     
     numero = 0
-    id = "menu"
+    #id = "menu"
 
     index = 0
     indice_valor = 0
@@ -801,10 +799,22 @@ def Retornar_Valores_Menu():
         if "TK_DESCRIPCION" == i[0]:
             v.Lista_Des.append(i[1])
 
+def Retornar_Valores_Factura():
+    for i in v.Lista_Token:
+        if "TK_CANTIDAD_COMIDA" == i[0]:
+            v.Cantidad_comida.append(i[1])
+
+    for i in v.Lista_Token:
+        if "TK_IDENTIFICADOR" == i[0]:
+            v.Identificadores_factura.append(i[1])
+    
 
 def Mostrar_Factura():
 
     today = date.today()
+    valor_total = float(0)
+    valor_propina = None
+    total_propina = None
 
     filew = open("factura.html", "w")
 
@@ -832,16 +842,19 @@ def Mostrar_Factura():
     filew.write('<br>')
     filew.write('<p class="card-text">Datos del Cliente</p>')
     for i in v.Lista_Token:
-        if "TK_NOMBRE_CLIENTE" in i:
+        if "TK_NOMBRE_CLIENTE" == i[0]:
             cadena = '<p class="card-text">Nombre: ' + i[1] + '</p>'
+            filew.write(str(cadena))
 
     for i in v.Lista_Token:
-        if "TK_NIT_CLIENTE" in i:
+        if "TK_NIT_CLIENTE" == i[0]:
             cadena = '<p class="card-text">Nit: ' + i[1] + '</p>'
+            filew.write(str(cadena))
 
     for i in v.Lista_Token:
-        if "TK_DIRECCION_CLIENTE" in i:
+        if "TK_DIRECCION_CLIENTE" == i[0]:
             cadena = '<p class="card-text">Dirección: ' + i[1] + '</p>'
+            filew.write(str(cadena))
 
     filew.write('<br>')
     filew.write('Descripcion')
@@ -859,37 +872,73 @@ def Mostrar_Factura():
     filew.write('<tr>')
     filew.write('</thead>')
     filew.write('<tbody>')
-    filew.write('<tr>')
-    filew.write('<th scope="row"> 2 </th>')
-    filew.write('<td> Bebida 1 </td>')
-    filew.write('<td> Q11.00 </td>')
-    filew.write('<td> Q22.00 </td>')
-    filew.write('</tr>')
-    filew.write('<tr>')
-    filew.write('<th scope="row"> 4 </th>')
-    filew.write('<td> Postre 2 </td>')
-    filew.write('<td> Q20.00 </td>')
-    filew.write('<td> Q80.00 </td>')
-    filew.write('</tr>')
+
+    try:
+        indice_para_factura = 0
+        while indice_para_factura < len(v.Lista_Ide):
+            if v.Lista_Ide[indice_para_factura] in v.Identificadores_factura:
+                indice_para_calculo = v.Lista_Ide.index(v.Lista_Ide[indice_para_factura])
+                v.Lista_valor.append(indice_para_calculo)
+            indice_para_factura += 1
+        indice__f = 0
+        for elemento in v.Lista_valor:
+            indice = int(elemento)
+            cantidad = int(v.Cantidad_comida[indice__f])
+            concepto = v.Lista_Nom[indice]
+            valor = float(v.Lista_Pre[indice])
+            calculo = cantidad * valor
+            v.Lista_calculo.append(calculo)
+
+            filew.write('<tr>')
+            cadena_cantidad = '<th scope="row">'+ str(cantidad) +'</th>'
+            filew.write(str(cadena_cantidad))
+            cadena_concepto = '<td>'+ str(concepto) +'</td>'
+            filew.write(str(cadena_concepto))
+            cadena_valor = '<td>Q'+ str(f"{valor:.2f}") +'</td>'
+            filew.write(str(cadena_valor))
+            cadena_calculo = '<td>Q'+ str(f"{calculo:.2f}") +'</td>'
+            filew.write(str(cadena_calculo))
+            filew.write('</tr>')
+            
+            indice__f += 1
+
+    except:
+        print()
+    
     filew.write('<hr>')
     filew.write('<tr>')
     filew.write('<th scope="row"> Sub Total </th>')
     filew.write('<td>  </td>')
     filew.write('<td>  </td>')
-    filew.write('<td> Q102.00 </td>')
+    for i in v.Lista_calculo:
+        valor_total += i
+    cadena_sub_total = '<td>Q'+ str(f"{valor_total:.2f}") +'</td>'
+    filew.write(str(cadena_sub_total))
     filew.write('</tr>')
     filew.write('<tr>')
-    filew.write('<th scope="row"> Propina (8%) </th>')
+    for i in v.Lista_Token:
+        if "TK_PROPINA" == i[0]:
+            valor_propina = i[1]
+            cadena = '<th scope="row"> Propina ('+ str(i[1]) +')</th>'
+            filew.write(str(cadena))
     filew.write('<td>  </td>')
     filew.write('<td>  </td>')
-    filew.write('<td> Q102.00 </td>')
+    valor_propina_sin_porcentaje = ""
+    for i in valor_propina:
+        if i.isdigit():
+            valor_propina_sin_porcentaje += i
+    total_propina = (int(valor_propina_sin_porcentaje)/100)*valor_total
+    cadena_propina = '<td>Q'+ str(f"{total_propina:.2f}") +'</td>'
+    filew.write(str(cadena_propina))
     filew.write('</tr>')
     filew.write('<hr>')
     filew.write('<tr>')
     filew.write('<th scope="row"> Total </th>')
     filew.write('<td>  </td>')
     filew.write('<td>  </td>')
-    filew.write('<td> Q110.00 </td>')
+    valor_total_con_propina = valor_total + total_propina
+    cadena_valor_total = '<td>'+ str(f"{valor_total_con_propina:.2f}") +'</td>'
+    filew.write(str(cadena_valor_total))
     filew.write('</tr>')
     filew.write('</tbody>')
     filew.write('</table>')
@@ -908,8 +957,8 @@ def usoDic():
     dic = {}
     sec = ""
     nombre = ""
-    precio = float(0)
-    desc = ""
+    #precio = float(0)
+    #desc = ""
     
     contador = 0
 
