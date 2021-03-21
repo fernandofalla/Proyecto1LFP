@@ -945,11 +945,12 @@ def Mostrar_Factura():
     filew.write("</div>")
     filew.write("</div>")
     filew.write("</div>")
+    filew.write("<br>")
     filew.write("</body>")        
     filew.write("</html>")        
 
     filew.close()
-
+    v.cantidad_factura += 1
     webbrowser.open_new_tab("factura.html")
 
 def usoDic():
