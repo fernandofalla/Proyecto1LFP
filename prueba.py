@@ -1,14 +1,19 @@
 import os
 import webbrowser
 from PIL import Image
+from datetime import date
+from datetime import datetime
+
 
 Lista_nombre_res = ["Restaurante LFP"]
 Lista_sec = ["Bebidas","Desayunos","Almuerzos"]
 Lista_cantidad_pre = [2,2,2]
+
 Lista_ide = ["bebida_1","Bebida_2","Pos_002","pos_001"]
 Lista_nom = ["Bebida1","Bebida2","Desayuno1","Desayuno2","Almuerzo1","Almuerzo2","Postre1"]
 Lista_pre = ["1.00","2.00","5.00","4.00","9.00","9.00","30.00"]
 Lista_des = ["Desc @Bebida1","Desc Bebida2","Desc Desayuno1","Desc Desayuno2","Desc Almuerzo1","Desc Almuerzo2","Desc Postre 1"]
+
 Lista_dom = ["1 av. 4-33 zona 3, Fraijanes, Guatemala"]
 
 cantidad_comida = [2,4]
@@ -18,12 +23,23 @@ identificadores_factura = ["bebida_1","pos_001"]
 indice_para_calculo = None
 Lista_valor = []
 Lista_calculo = []
+Lista_total = []
 
 cadena_cliente = "Luis Fernando"
 cadena_nit = "12323223"
 cadena_domicilio = "1 av. 4-33 zona 3, Fraijanes"
 cadena_propina = "8%"
 cadena_identificador = "pos_001"
+
+
+today = date.today()
+
+now = datetime.now()
+
+print(str(today.day)+str("/")+str(today.month)+str("/")+str(today.year))
+
+
+
 
 #print(cadena_cliente.replace(" ","").isalpha())
 #print(cadena_nit.replace("-","").isdigit())
@@ -37,6 +53,11 @@ cadena_identificador = "pos_001"
 #    if i == chr(44) or i == chr(45) or i == chr(46) :
 #        print("Hello")
 
+#Lista_ide
+#Identificadores_factura
+#Lista_valor
+
+
 def factura():
     try:
         indice_para_factura = 0
@@ -48,10 +69,13 @@ def factura():
         indice__f = 0
         for elemento in Lista_valor:
             indice = int(elemento)
+            
             cantidad = int(cantidad_comida[indice__f])
+            concepto = Lista_nom[indice]
             valor = float(Lista_pre[indice])
             calculo = cantidad * valor
-            print("Q"+str(f"{calculo:.2f}"))
+
+            print(cantidad," ",concepto," ",valor," Q"+str(f"{calculo:.2f}"))
             indice__f += 1
 
     except:
@@ -264,4 +288,4 @@ def Mostrar_Factura():
 
 #Mostrar_Factura()
 
-print(chr(39))
+#print(chr(39))

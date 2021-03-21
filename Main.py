@@ -2,6 +2,8 @@ import os
 import webbrowser
 from tkinter.filedialog import askopenfilename
 from PIL import Image
+from datetime import date
+from datetime import datetime
 from Token import Token
 from Token import Valor
 from Token import Error
@@ -96,7 +98,7 @@ def Cargar_Orden():
 
 def Generar_Menu():
     AFD()
-    Retornar_Valores()
+    Retornar_Valores_Menu()
     
     if v.Lista_Error:
         Error_Encontrado()
@@ -111,8 +113,10 @@ def Generar_Factura():
     v.cadena = ""
     AFD_FACTURA()
     Token_Reconocido()
-    if v.Lista_Error != None:
+    if v.Lista_Error:
         Error_Encontrado()
+    else:
+        Mostrar_Factura()
 
 def Generar_Arbol():
     archivo()
@@ -229,8 +233,7 @@ def AFD():
                 v.columna += 1
                 v.estado = 2
             elif elemento == "#":
-                print("Archivo Analizado")
-                break
+                print("Archivo analizado")
             else:
                 v.cadena += elemento
                 v.columna += 1
@@ -243,21 +246,18 @@ def AFD():
                 v.cadena += elemento
                 v.estado = 1
             elif elemento == " ":
-                v.columna += 1
-                v.cantidad += 1
-                v.estado = 1
+                if v.cadena.upper() == "RESTAURANTE":
+                    Guardar_Token("Restaurante")
+                    v.columna += 1
+                    v.estado = 0
+                else:
+                    Guardar_Error("")
             elif elemento == "=":
                 Guardar_Token("Restaurante")
                 v.columna += 1
                 v.cantidad += 1
                 v.cadena += elemento
                 Guardar_Token("igual")
-            else:
-                Guardar_Token("Restaurante")
-                v.cadena += elemento
-                v.columna += 1
-                v.cantidad += 1
-                Guardar_Error("")
         elif v.estado == 2:
             if elemento.isalpha():
                 v.columna += 1
@@ -764,7 +764,7 @@ def Mostrar_Menu():
 
     webbrowser.open_new_tab("menu.html")  
 
-def Retornar_Valores():
+def Retornar_Valores_Menu():
     indice = 0
     cantidad = len(v.Lista_Token)
     contador = 0
@@ -793,7 +793,6 @@ def Retornar_Valores():
         if "TK_NOMBRE" == i[0]:
             v.Lista_Nom.append(i[1])
 
-
     for i in v.Lista_Token:
         if "TK_PRECIO" == i[0]:
             v.Lista_Pre.append(i[1])
@@ -802,9 +801,11 @@ def Retornar_Valores():
         if "TK_DESCRIPCION" == i[0]:
             v.Lista_Des.append(i[1])
 
-    print(v.Lista_Ide)
 
 def Mostrar_Factura():
+
+    today = date.today()
+
     filew = open("factura.html", "w")
 
     filew.write("<html>")
@@ -818,61 +819,89 @@ def Mostrar_Factura():
     filew.write("<br>")
     filew.write("<br>")
     
-    filew.write('<div class="jumbotron text-white bg-dark">')
-    filew.write('<div class="container" style="text-align:center">')
+    filew.write('<div class="card text-white bg-warning">')
+    filew.write('<div class="card-body">')
     for i in v.Lista_Token:
         if "TK_NOMBRE_RES" in i:
-            cadena = '<h1 class="display-4">'+ i[1] +'</h1>'
+            cadena = '<center><h1 class="card-title">'+ i[1] +'</h1></center>'
             filew.write(str(cadena))
+    cadena_fac = '<center><h1 class="card-title">Factura No. '+ str(v.cantidad_factura) +'</h1></center>'
+    filew.write(str(cadena_fac))
+    cadena_fecha = '<center><h1 class="card-title">Fecha '+ str(today.day)+str("/")+str(today.month)+str("/")+str(today.year) +'</h1></center>' 
+    filew.write(str(cadena_fecha))
+    filew.write('<br>')
+    filew.write('<p class="card-text">Datos del Cliente</p>')
+    for i in v.Lista_Token:
+        if "TK_NOMBRE_CLIENTE" in i:
+            cadena = '<p class="card-text">Nombre: ' + i[1] + '</p>'
+
+    for i in v.Lista_Token:
+        if "TK_NIT_CLIENTE" in i:
+            cadena = '<p class="card-text">Nit: ' + i[1] + '</p>'
+
+    for i in v.Lista_Token:
+        if "TK_DIRECCION_CLIENTE" in i:
+            cadena = '<p class="card-text">Dirección: ' + i[1] + '</p>'
+
+    filew.write('<br>')
+    filew.write('Descripcion')
+    filew.write('<table class="table">')
+    filew.write('<thead>')
+    filew.write('<tr>')
+    filew.write('<th scope="col">Cantidad')
+    filew.write('</th>')
+    filew.write('<th scope="col">Concepto')
+    filew.write('</th>')
+    filew.write('<th scope="col">Precio')
+    filew.write('</th>')
+    filew.write('<th scope="col">Total')
+    filew.write('</th>')
+    filew.write('<tr>')
+    filew.write('</thead>')
+    filew.write('<tbody>')
+    filew.write('<tr>')
+    filew.write('<th scope="row"> 2 </th>')
+    filew.write('<td> Bebida 1 </td>')
+    filew.write('<td> Q11.00 </td>')
+    filew.write('<td> Q22.00 </td>')
+    filew.write('</tr>')
+    filew.write('<tr>')
+    filew.write('<th scope="row"> 4 </th>')
+    filew.write('<td> Postre 2 </td>')
+    filew.write('<td> Q20.00 </td>')
+    filew.write('<td> Q80.00 </td>')
+    filew.write('</tr>')
+    filew.write('<hr>')
+    filew.write('<tr>')
+    filew.write('<th scope="row"> Sub Total </th>')
+    filew.write('<td>  </td>')
+    filew.write('<td>  </td>')
+    filew.write('<td> Q102.00 </td>')
+    filew.write('</tr>')
+    filew.write('<tr>')
+    filew.write('<th scope="row"> Propina (8%) </th>')
+    filew.write('<td>  </td>')
+    filew.write('<td>  </td>')
+    filew.write('<td> Q102.00 </td>')
+    filew.write('</tr>')
+    filew.write('<hr>')
+    filew.write('<tr>')
+    filew.write('<th scope="row"> Total </th>')
+    filew.write('<td>  </td>')
+    filew.write('<td>  </td>')
+    filew.write('<td> Q110.00 </td>')
+    filew.write('</tr>')
+    filew.write('</tbody>')
+    filew.write('</table>')
     filew.write("</div>")
     filew.write("</div>")
-
-    nombre_sec = None
-    
-    numero = 0
-    id = "menu"
-
-    index = 0
-    indice_valor = 0
-    cantidad = 0
-    precio = float(0)
-    for i in v.Lista_Cantidad_Producto:
-        valor = int(i)
-        cantidad += valor
-    
-    while index < int(len(v.Lista_Sec)):
-        filew.write('<div class="jumbotron text-white bg-info">')
-        filew.write('<div class="container">')
-        indice = 0
-        nombre_sec = "<h1>" + v.Lista_Sec[index] + "<h1>"
-        filew.write("<br>")
-        filew.write(str(nombre_sec) + os.linesep)
-        cantidad_art = int(v.Lista_Cantidad_Producto[index])
-        while indice < cantidad_art:
-            nombre = v.Lista_Nom[indice_valor]
-            precio = float(v.Lista_Pre[indice_valor])
-            descrp = v.Lista_Des[indice_valor]
-            cadena = "<h2>" + nombre + '&nbsp &nbsp &nbsp &nbsp &nbsp Q.' + str(f"{precio:.2f}") + "</h2>"
-            filew.write(str(cadena) + os.linesep)
-            cad_desc  = "<h3>" + descrp + "</h3>"
-            filew.write(str(cad_desc) + os.linesep)
-            filew.write("<br>")
-            numero += 1
-            indice_valor += 1
-            indice += 1
-        index += 1
-        filew.write("</div>")
-        filew.write("</div>")
-
-    filew.write("<br>")
-    filew.write("<br>")
     filew.write("</div>")
     filew.write("</body>")        
     filew.write("</html>")        
 
     filew.close()
 
-    webbrowser.open_new_tab("factura.html")  
+    webbrowser.open_new_tab("factura.html")
 
 def usoDic():
 

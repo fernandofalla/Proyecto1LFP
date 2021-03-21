@@ -1,5 +1,5 @@
 digraph arbol{
-Raiz [label="                Restaurante LFP                   "]
+Raiz [label="Restaurante LFP                   "]
 Raiz -> Bebidas;
 Raiz -> Desayunos;
 Raiz -> Postres;
