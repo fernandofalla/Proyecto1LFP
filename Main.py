@@ -1,6 +1,8 @@
 import os
 import webbrowser
 from tkinter.filedialog import askopenfilename
+from tkinter import *
+from tkinter import filedialog
 from PIL import Image
 from datetime import date
 from datetime import datetime
@@ -76,7 +78,7 @@ def Cargar_Menu():
             v.entrada += i
             
     except:
-        print("Archivo incorrecto")
+        print(">> Archivo incorrecto")
 
 def Cargar_Orden():
     try:
@@ -90,31 +92,50 @@ def Cargar_Orden():
             v.entrada += i
             
     except:
-        print("Archivo incorrecto")
+        print(">> Archivo incorrecto")
 
 def Generar_Menu():
-    AFD()
-    Retornar_Valores_Menu()
-    
-    if v.Lista_Error:
-        Error_Encontrado()
-    else:
-        Token_Reconocido()
-        Mostrar_Menu()
+    if v.entrada:
+
+        AFD()
+        Retornar_Valores_Menu()
         
+        if v.Lista_Error:
+            Error_Encontrado()
+        else:
+            print()
+            decision = input(">> ¿Desea limitar los precios? [Si - No] ")
+            print()
+            if decision.upper() == "SI":
+                v.precio_limite = float(input(">> Ingrese el limite "))
+                Token_Reconocido()
+                Mostrar_Menu_Limite()
+            else:
+                Token_Reconocido()
+                Mostrar_Menu()
+    else:
+        print(">> No se ha cargado ningun archivo")
+  
 
 def Generar_Factura():
-    v.fila = 1
-    v.columna = 1
-    v.cadena = ""
-    AFD_FACTURA()
-    Retornar_Valores_Factura()
-    
-    if v.Lista_Error:
-        Error_Encontrado()
+    if v.entrada:
+        v.fila = 1
+        v.columna = 1
+        v.cadena = ""
+        AFD_FACTURA()
+        Retornar_Valores_Factura()
+        
+        if v.Lista_Error:
+            Error_Encontrado()
+        else:
+            Token_Reconocido()
+            if Validar_Propina():
+                Mostrar_Factura()
+            else:
+                print(">> Propina no valida")
+
     else:
-        Token_Reconocido()
-        Mostrar_Factura()
+        print(">> No se ha cargado ningun archivo")
 
 def Generar_Arbol():
     archivo()
@@ -152,7 +173,8 @@ def archivo():
     for i in v.Lista_Cantidad_Producto:
         valor = int(i)
         cantidad += valor
-
+    precio_inicial = float(0)
+    precio_final = float(0)
     while index < int(len(v.Lista_Sec)):
         indice = 0
         nombre_sec = v.Lista_Sec[index]
@@ -231,7 +253,7 @@ def AFD():
                 v.columna += 1
                 v.estado = 2
             elif elemento == "#":
-                print("Archivo analizado")
+                print(">> Archivo analizado")
                 break
             else:
                 v.cadena += elemento
@@ -512,6 +534,14 @@ def AFD_FACTURA():
                 v.columna += 1
                 v.cantidad += 1
                 v.estado = 3
+            elif elemento == "#":
+                print(">> Archivo analizado")
+                break
+            else:
+                v.cadena += elemento
+                v.columna += 1
+                v.cantidad += 1
+                Guardar_Error("")
         elif v.estado == 1:
             if elemento.isalpha():
                 v.cadena += elemento
@@ -893,6 +923,77 @@ def Mostrar_Menu():
 
     webbrowser.open_new_tab("menu.html")  
 
+def Mostrar_Menu_Limite():    
+    filew = open("menulimite.html", "w")
+
+    filew.write("<html>")
+    filew.write("<head>")
+    filew.write("<title>Menu</title>")
+    filew.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">')
+    filew.write('<link rel="icon" href="comando.png">')
+    filew.write("</head>")
+    filew.write("<body>")        
+    filew.write('<div class="container">')
+    filew.write("<br>")
+    filew.write("<br>")
+    
+    filew.write('<div class="jumbotron text-white bg-dark">')
+    filew.write('<div class="container" style="text-align:center">')
+    for i in v.Lista_Token:
+        if "TK_NOMBRE_RES" in i:
+            cadena = '<h1 class="display-4">'+ i[1] +'</h1>'
+            filew.write(str(cadena))
+    filew.write("</div>")
+    filew.write("</div>")
+
+    nombre_sec = None
+    
+    numero = 0
+    #id = "menu"
+
+    index = 0
+    indice_valor = 0
+    cantidad = 0
+    precio = float(0)
+    for i in v.Lista_Cantidad_Producto:
+        valor = int(i)
+        cantidad += valor
+    
+    while index < int(len(v.Lista_Sec)):
+        filew.write('<div class="jumbotron text-white bg-info">')
+        filew.write('<div class="container">')
+        indice = 0
+        nombre_sec = "<h1>" + v.Lista_Sec[index] + "<h1>"
+        filew.write("<br>")
+        filew.write(str(nombre_sec) + os.linesep)
+        cantidad_art = int(v.Lista_Cantidad_Producto[index])
+        while indice < cantidad_art:
+            precio = float(v.Lista_Pre[indice_valor])
+            if precio <= v.precio_limite:
+                nombre = v.Lista_Nom[indice_valor]
+                descrp = v.Lista_Des[indice_valor]
+                cadena = "<h2>" + nombre + '&nbsp &nbsp &nbsp &nbsp &nbsp Q.' + str(f"{precio:.2f}") + "</h2>"
+                filew.write(str(cadena) + os.linesep)
+                cad_desc  = "<h3>" + descrp + "</h3>"
+                filew.write(str(cad_desc) + os.linesep)
+                filew.write("<br>")
+            numero += 1
+            indice_valor += 1
+            indice += 1
+        index += 1
+        filew.write("</div>")
+        filew.write("</div>")
+
+    filew.write("<br>")
+    filew.write("<br>")
+    filew.write("</div>")
+    filew.write("</body>")        
+    filew.write("</html>")        
+
+    filew.close()
+
+    webbrowser.open_new_tab("menulimite.html")  
+
 def Retornar_Valores_Menu():
     indice = 0
     cantidad = len(v.Lista_Token)
@@ -1058,7 +1159,7 @@ def Mostrar_Factura():
         if i.isdigit():
             valor_propina_sin_porcentaje += i
         elif i == ".":
-            valor_propina_sin_porcentaje += i
+            valor_propina_sin_porcentaje += i    
     total_propina = (float(valor_propina_sin_porcentaje)/100)*valor_total
     cadena_propina = '<td>Q'+ str(f"{total_propina:.2f}") +'</td>'
     filew.write(str(cadena_propina))
@@ -1084,6 +1185,24 @@ def Mostrar_Factura():
     filew.close()
     v.cantidad_factura += 1
     webbrowser.open_new_tab("factura.html")
+
+def Validar_Propina():
+    valor_propina = None
+    valor_propina_sin_porcentaje = ""
+    for i in v.Lista_Token:
+        if "TK_PROPINA" == i[0]:
+            valor_propina = i[1]
+        
+    for i in valor_propina:
+        if i.isdigit():
+            valor_propina_sin_porcentaje += i
+        elif i == ".":
+            valor_propina_sin_porcentaje += i
+    prop = float(valor_propina_sin_porcentaje)
+    if prop >= 0 and prop <= 100:
+        return True
+
+    return False
 
 def usoDic():
 

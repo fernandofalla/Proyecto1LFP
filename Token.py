@@ -107,3 +107,4 @@ class Valor:
         self.cadena_aux_factura = ""
         self.cantidad_aux_factura = 0
         self.columna_aux_factura = 0
+        self.precio_limite = float(0)

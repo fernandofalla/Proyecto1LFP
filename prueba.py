@@ -92,6 +92,8 @@ def factura():
 def archivo():
     #cantidad_sec = len(Lista_sec)
     #index = 0
+    precio_inicial = float(0)
+    precio_final = float(0)
     nombre_sec = None
     numero_sec = 0
     #id_sec = "seccion"
@@ -135,7 +137,9 @@ def archivo():
         cantidad_art = int(Lista_cantidad_pre[index])
         while indice < cantidad_art:
             nombre = Lista_nom[indice_valor]
-            precio = Lista_pre[indice_valor]
+            precio_inicial = Lista_pre[indice_valor]
+            precio_final = Lista_pre[indice_valor + 1]
+            if precio_inicial < precio_final:
             descrp = Lista_des[indice_valor]
             id_numero = id + str(numero)
             cadena = id_numero + ' [label="' + nombre + '     Q.' + precio + '\n' + descrp + '"]'
