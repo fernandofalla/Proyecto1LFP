@@ -35,6 +35,10 @@ today = date.today()
 
 now = datetime.now()
 
+cadena_para_probar_dir = "Guatemala"
+print(cadena_cliente.replace(" ","1").isalnum())
+print(cadena_para_probar_dir.isalpha())
+
 #print(str(today.day)+str("/")+str(today.month)+str("/")+str(today.year))
 
 
@@ -81,7 +85,7 @@ def factura():
     except:
         print()
         
-factura()    
+#factura()    
 
 
 
@@ -284,6 +288,6 @@ def Mostrar_Factura():
 
     webbrowser.open_new_tab("factura.html")  
 
-Mostrar_Factura()
+#Mostrar_Factura()
 
 #print(chr(39))

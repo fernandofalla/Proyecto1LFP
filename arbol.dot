@@ -3,24 +3,25 @@ Raiz [label="Restaurante LFP"]
 Raiz -> Bebidas;
 Raiz -> Desayunos;
 Raiz -> Postres;
-Raiz -> Almuerzos;
 Bebidas
 menu0 [label="Bebida #1     Q.11.00
-Descripcion Bebida 1"]
+Descripci贸n Bebida 1"]
 Bebidas -> menu0;
+menu1 [label="Bebida #2     Q.10.50
+Descripci贸n Bebida 2"]
+Bebidas -> menu1;
 Desayunos
-menu1 [label="Desayuno 1     Q.1.00
-Descripcion Desayuno 2"]
-Desayunos -> menu1;
-menu2 [label="Desayuno 2     Q.0.00
-Descripcion Desayuno 3"]
+menu2 [label="Desayuno 1     Q.45.00
+Descripci贸n Desayuno 1"]
 Desayunos -> menu2;
-menu3 [label="Desayuno 3     Q.40.00
-Descripcion Postre 1"]
+menu3 [label="Desayuno 2     Q.40.00
+Descripci贸n Desayuno 2"]
 Desayunos -> menu3;
-Postres
-menu4 [label="Postre 1     Q.35.00
-Almuerzo con carne asada y acompa胊miento"]
-Postres -> menu4;
-Almuerzos
+menu4 [label="Desayuno 3     Q.35.00
+Descripci贸n Desayuno 3"]
+Desayunos -> menu4;
+  Postres
+menu5 [label="Postre 1     Q.25.00
+Descripci贸n Postre 1"]
+  Postres -> menu5;
 }

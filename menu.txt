@@ -1,10 +1,10 @@
 restaurante='Restaurante LFP'
-'Bebidas':
+'Bebidas'  :
 [bebida_1;'Bebida #1';11.;'Descripcion Bebida 1']     
 'Desayunos':
 [dedo1;'Desayuno 1';45.00;'Descripcion Desayuno 1']
 [d2;'Desayuno 2';40.;'Descripcion Desayuno 2']
-[d3;'Desayuno 3';35;'Descripcion Desayuno 3']
+[d_3;'Desayuno 3';35;'Descripcion Desayuno 3']
 'Postres':
 [pos_001;'Postre 1';25;'Descripcion Postre 1']
 'Almuerzos':

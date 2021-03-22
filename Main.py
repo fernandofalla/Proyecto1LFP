@@ -232,6 +232,7 @@ def AFD():
                 v.estado = 2
             elif elemento == "#":
                 print("Archivo analizado")
+                break
             else:
                 v.cadena += elemento
                 v.columna += 1
@@ -316,7 +317,7 @@ def AFD():
             elif elemento == "]":
                 v.columna -= 1
                 Guardar_Token("desc")
-                v.columna += 1
+                #v.columna += 1
                 v.cadena += elemento
                 #v.columna += 2
                 Guardar_Token("corch_ce")
@@ -343,12 +344,14 @@ def AFD():
                     Guardar_Token("coma")
             elif elemento == " ":
                 v.columna += 1
+                v.cantidad += 1
                 v.estado = 3
             elif elemento == "\n":
                 v.columna -= 1
                 Guardar_Token("nombre_res")
                 v.fila += 1
                 v.columna = 1
+                v.estado = 0
             else:
                 v.cadena = ""
                 v.cadena += elemento
@@ -386,12 +389,11 @@ def AFD():
                     Guardar_Token("punto_coma")
             elif elemento == " ":
                 if v.cadena == "":
+                    v.columna += 1
                     v.estado = 4
                 else:
                     v.columna += 1
-                    v.cantidad += 1
-                    v.cadena += elemento
-                    Guardar_Error("id_inv")
+                    v.estado = 7
             else:
                 v.cadena += ""
                 v.cadena += elemento
@@ -430,9 +432,10 @@ def AFD():
                 v.estado = 6
             else:
                 v.columna += 1
-                v.cadena = ""
+                #v.cadena = ""
                 v.cadena += elemento
-                Guardar_Error("")
+                v.cantidad += 1
+                Guardar_Error("num_inc")
         elif v.estado == 6:
             if elemento.isdigit():
                 v.columna += 1
@@ -456,7 +459,26 @@ def AFD():
                 Guardar_Token("precio")
                 v.columna += 1
                 v.estado = 0
-
+        elif v.estado == 7:
+            if elemento == " ":
+                v.columna -= 1
+                Guardar_Token("id")
+                v.columna += 2
+                v.estado = 0
+            elif elemento == ";":
+                v.columna -= 1
+                Guardar_Token("id")
+                v.columna += 2
+                v.cantidad = 1
+                v.cadena += elemento
+                Guardar_Token("punto_coma")
+            else:
+                v.columna += 1
+                v.cantidad += 2
+                #v.cadena = ""
+                v.cadena += " "
+                v.cadena += elemento
+                Guardar_Error("id_inv")
        
 def AFD_FACTURA():
     v.entrada = v.entrada + "#"
@@ -530,6 +552,10 @@ def AFD_FACTURA():
                 elif v.cadena.replace("-","").isdigit():
                     v.columna -= 1
                     Guardar_Token("nit")
+                    v.columna += 1
+                elif v.cadena.isalpha():
+                    v.columna -= 1
+                    Guardar_Token("dir")
                     v.columna += 1
                 else:
                     v.columna -= 1
@@ -625,7 +651,6 @@ def Guardar_Error(tipo):
     v.cadena = ""
     v.estado = 0
     
-
 def Mostrar_Token_Menu():
     for i in v.Lista_Token:
         print(i)
@@ -901,7 +926,6 @@ def Retornar_Valores_Factura():
         if "TK_IDENTIFICADOR" == i[0]:
             v.Identificadores_factura.append(i[1])
     
-
 def Mostrar_Factura():
 
     today = date.today()
@@ -1020,7 +1044,9 @@ def Mostrar_Factura():
     for i in valor_propina:
         if i.isdigit():
             valor_propina_sin_porcentaje += i
-    total_propina = (int(valor_propina_sin_porcentaje)/100)*valor_total
+        elif i == ".":
+            valor_propina_sin_porcentaje += i
+    total_propina = (float(valor_propina_sin_porcentaje)/100)*valor_total
     cadena_propina = '<td>Q'+ str(f"{total_propina:.2f}") +'</td>'
     filew.write(str(cadena_propina))
     filew.write('</tr>')
