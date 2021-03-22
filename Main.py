@@ -607,7 +607,11 @@ def AFD_FACTURA():
                 v.estado = 3
             else:
                 if v.cadena.isidentifier():
+                    v.cadena_aux_factura = v.cadena
+                    v.cantidad_aux_factura = v.cantidad
+                    v.columna_aux_factura = v.columna
                     Guardar_Token("id")   
+                    Guardar_Token_Factura("id")
                     v.fila += 1
                     v.columna = 1
                 else:
@@ -634,12 +638,21 @@ def AFD_FACTURA():
                 Guardar_Error("") 
 
 def Guardar_Token(token):
-    token = Token(token, v.cadena, v.fila, v.columna - v.cantidad)
+    token_reco = Token(token, v.cadena, v.fila, v.columna - v.cantidad)
 
-    v.Lista_Token.append(token.Retornartoken())
+    v.Lista_Token.append(token_reco.Retornartoken())
 
     v.cantidad = 0
     v.cadena = ""
+    v.estado = 0
+
+def Guardar_Token_Factura(token):
+    token_reco = Token(token, v.cadena_aux_factura, v.fila, v.columna_aux_factura - v.cantidad_aux_factura)
+
+    v.Lista_Token_Factura.append(token_reco.Retornartoken())
+
+    v.cantidad_aux_factura = 0
+    v.cadena_aux_factura = ""
     v.estado = 0
     
 def Guardar_Error(tipo):
@@ -922,7 +935,7 @@ def Retornar_Valores_Factura():
         if "TK_CANTIDAD_COMIDA" == i[0]:
             v.Cantidad_comida.append(i[1])
 
-    for i in v.Lista_Token:
+    for i in v.Lista_Token_Factura:
         if "TK_IDENTIFICADOR" == i[0]:
             v.Identificadores_factura.append(i[1])
     
@@ -964,12 +977,12 @@ def Mostrar_Factura():
             filew.write(str(cadena))
 
     for i in v.Lista_Token:
-        if "TK_NIT_CLIENTE" == i[0]:
+        if "TK_NIT" == i[0]:
             cadena = '<p class="card-text">Nit: ' + i[1] + '</p>'
             filew.write(str(cadena))
 
     for i in v.Lista_Token:
-        if "TK_DIRECCION_CLIENTE" == i[0]:
+        if "TK_DIRECCION" == i[0]:
             cadena = '<p class="card-text">Dirección: ' + i[1] + '</p>'
             filew.write(str(cadena))
 
@@ -1001,7 +1014,7 @@ def Mostrar_Factura():
         for elemento in v.Lista_valor:
             indice = int(elemento)
             cantidad = int(v.Cantidad_comida[indice__f])
-            concepto = v.Lista_Nom[indice__f]
+            concepto = v.Lista_Nom[indice]
             valor = float(v.Lista_Pre[indice])
             calculo = cantidad * valor
             v.Lista_calculo.append(calculo)

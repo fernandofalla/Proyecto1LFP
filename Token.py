@@ -45,9 +45,9 @@ class Token:
         elif self.token == "cliente":
             return "TK_NOMBRE_CLIENTE", self.lexema, self.fila, self.columna
         elif self.token == "nit":
-            return "TK_NIT_CLIENTE", self.lexema, self.fila, self.columna
+            return "TK_NIT", self.lexema, self.fila, self.columna
         elif self.token == "dir":
-            return "TK_DIRECCION_CLIENTE", self.lexema, self.fila, self.columna
+            return "TK_DIRECCION", self.lexema, self.fila, self.columna
         elif self.token == "prop":
             return "TK_PROPINA", self.lexema, self.fila, self.columna
         elif self.token == "precio":
@@ -56,36 +56,6 @@ class Token:
             return "TK_CANTIDAD_COMIDA", self.lexema, self.fila, self.columna
         else:
             return "SIMBOLO DESCONOCIDO", self.lexema, self.fila, self.columna
-        '''
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        elif self.token == "":
-            return "", self.lexema, self.fila, self.columna
-        '''
        
 class Error:
 
@@ -134,3 +104,6 @@ class Valor:
         self.Lista_calculo = []
         self.Identificadores_factura = []
         self.Cantidad_comida = []
+        self.cadena_aux_factura = ""
+        self.cantidad_aux_factura = 0
+        self.columna_aux_factura = 0
