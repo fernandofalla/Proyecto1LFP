@@ -1,0 +1,13 @@
+# Archivos de caché compilados de Python
+__pycache__/
+*.pyc
+
+# Archivos de salida que el programa genera en tiempo de ejecución
+output/
+*.dot
+*.png
+*.html
+
+# Carpetas de editores
+.vscode/
+.idea/
